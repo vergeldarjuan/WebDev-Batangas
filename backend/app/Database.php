@@ -1,12 +1,11 @@
 <?php
-$databaseFile = dirname(__DIR__) . '/database/database.db';
 
-try {
-    $pdo = new PDO("sqlite:" . $databaseFile);
+class Database {
+    public static function connect(): PDO {
+        $pdo = new PDO('sqlite:' . DATABASE_PATH);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    echo "Connected to SQLite";
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+        return $pdo;
+    }
 }
