@@ -1,0 +1,514 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 40, 40, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  width: 92%;
+  max-width: 440px;
+  padding: 3rem 2.5rem;
+  position: relative;
+  transform: scale(0.93) translateY(12px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-soft);
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s, transform 0.25s ease-out;
+}
+
+.modal-close-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.modal-close-btn:hover {
+  color: var(--baybayin);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  margin-bottom: 2rem;
+}
+
+.modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: var(--river-d);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.modal-subtitle {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.modal-subtitle a {
+  color: var(--baybayin);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.modal-subtitle a:hover {
+  color: #94301f;
+  text-decoration: underline;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.45rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  border-radius: 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--batang-l);
+  box-shadow: 0 0 0 3px rgba(201, 138, 82, 0.12);
+}
+
+.form-control::placeholder {
+  color: #a4aaa6;
+  font-weight: 300;
+}
+
+.form-error {
+  font-size: 0.72rem;
+  color: var(--baybayin);
+  margin-top: 0.35rem;
+  display: none;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -0.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.78rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: var(--batang);
+  cursor: pointer;
+}
+
+.btn-auth {
+  display: block;
+  width: 100%;
+  background: var(--baybayin);
+  color: #fff;
+  border: none;
+  padding: 0.85rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 1.5rem;
+}
+
+.btn-auth:hover {
+  background: #94301f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(179, 64, 47, 0.18);
+}
+
+.btn-auth:active {
+  transform: translateY(0);
+}
+
+.auth-alert {
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--baybayin);
+  background: rgba(179, 64, 47, 0.06);
+  font-size: 0.8rem;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  line-height: 1.4;
+  display: none;
+}
+
+.auth-alert.success {
+  border-left-color: var(--river);
+  background: rgba(16, 60, 60, 0.06);
+  color: var(--river-d);
+}
+
+.modal-view {
+  animation: modalViewFade 0.2s ease-out;
+}
+
+@keyframes modalViewFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .modal-card {
+    width: 95%;
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+/* ── RENTALS LISTINGS SECTION ── */
+#rentals {
+  padding: 8rem 3rem;
+  background: var(--sand);
+  border-bottom: 1px solid var(--line);
+}
+
+.rental-tabs {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.tab-btn.active {
+  color: var(--river-d);
+  border-color: var(--batang-l);
+}
+
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.2rem;
+}
+
+.rental-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+}
+
+.rental-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(16, 60, 60, 0.06);
+}
+
+.rental-image-wrap {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background: var(--river-d);
+}
+
+.rental-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.rental-card:hover .rental-image {
+  transform: scale(1.05);
+}
+
+.rental-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--river);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  padding: 0.35rem 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.rental-info {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.rental-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.6rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.rental-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  color: var(--river-d);
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.rental-price-wrap {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 1.2rem;
+}
+
+.rental-price {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--baybayin);
+}
+
+.rental-price span {
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.btn-book {
+  background: var(--baybayin);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.btn-book:hover {
+  background: #94301f;
+  transform: translateY(-1px);
+}
+
+/* ── PROFILE DASHBOARD MODAL ── */
+.profile-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.profile-tab-btn {
+  background: none;
+  border: none;
+  font-family: 'Fraunces', serif;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  padding-bottom: 0.75rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.profile-tab-btn.active {
+  color: var(--river-d);
+  border-color: var(--batang-l);
+  font-weight: 600;
+}
+
+.booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.booking-card {
+  border: 1px solid var(--line);
+  padding: 1.2rem;
+  background: #fff;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.booking-card:hover {
+  border-color: var(--batang-l);
+}
+
+.booking-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+  gap: 1rem;
+}
+
+.booking-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  padding: 0.25rem 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.booking-status.pending {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.booking-status.confirmed {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.booking-status.cancelled {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.booking-status.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.booking-listing-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--river-d);
+}
+
+.booking-details {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.booking-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+.btn-action-edit, .btn-action-cancel {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.45rem 0.9rem;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn-action-edit:hover {
+  background: var(--sand);
+  border-color: var(--batang-l);
+}
+
+.btn-action-cancel {
+  border-color: rgba(179, 64, 47, 0.2);
+  color: var(--baybayin);
+}
+
+.btn-action-cancel:hover {
+  background: rgba(179, 64, 47, 0.05);
+  border-color: var(--baybayin);
+}
+
+@media (max-width: 980px) {
+  #rentals {
+    padding: 4.5rem 1.5rem;
+  }
+}

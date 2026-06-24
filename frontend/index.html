@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="auth.css" />
     <script src="scripts.js" defer></script>
+    <script src="auth.js" defer></script>
 </head>
 <body>
 
@@ -29,6 +31,9 @@
         <li><a href="#food">Food</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#visit">Visit</a></li>
+        <li class="auth-guest"><a href="#" id="signInBtn">Sign In</a></li>
+        <li class="auth-user" style="display: none;"><a href="#" id="navUser">Profile</a></li>
+        <li class="auth-user" style="display: none;"><a href="#" id="logoutBtn">Logout</a></li>
     </ul>
 </nav>
 
@@ -402,22 +407,26 @@
 <!-- ═══════════════ VISIT / CONTACT ═══════════════ -->
 <section id="visit">
     <div class="section-head">
-        <p class="section-eyebrow">Practical Info</p>
+        <p class="section-eyebrow">Practical Info & Travel</p>
         <h2 class="section-title">Visiting the City</h2>
-        <p class="section-body">For anything official — permits, records, emergencies — these are the city's own channels, not third-party listings.</p>
+        <p class="section-body">Get in touch with the local government for official services, or secure accommodation and transport options for your travel below.</p>
     </div>
+    
     <div class="visit-grid">
         <div class="visit-card reveal">
-        <h4>City Hall</h4>
-        <p>Batangas City Hall Complex<br />P. Burgos Street, Barangay 17<br />Batangas City, Batangas 4200</p>
+            <h4>Accommodations & Stays</h4>
+            <p>
+                Explore verified vacation rentals, beach-side apartments, and cozy rooms in and around the city to plan your stay.
+            </p>
+            <a href="listings.html?category=apartment" class="hero-cta">Book a Stay</a>
         </div>
+
         <div class="visit-card reveal reveal-delay-1">
-        <h4>General Line</h4>
-        <p>+63 (043) 723-1511<br />Mayor's Action Center: 786-1920</p>
-        </div>
-        <div class="visit-card reveal reveal-delay-2">
-        <h4>Official Site</h4>
-        <p>For business permits, full disclosure reports, and city advisories, visit<br /><a href="https://www.batangascity.gov.ph/web/" target="_blank" rel="noopener">batangascity.gov.ph</a></p>
+            <h4>Transport & Car Rentals</h4>
+            <p>
+                Rent a fuel-efficient sedan or a spacious family SUV to explore the coastal roads and heritage towns of Batangas.
+            </p>
+            <a href="listings.html?category=car" class="hero-cta">Rent a Vehicle</a>
         </div>
     </div>
 </section>
@@ -459,5 +468,84 @@
         <span>Eto Batangueño Disiplinado</span>
     </div>
 </footer>
+
+<div id="authModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+        <button id="modalCloseBtn" class="modal-close-btn" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div id="loginView" class="modal-view">
+            <div class="modal-header">
+                <h3 class="modal-title">Welcome Back</h3>
+                <p class="modal-subtitle">New to Batangas City? <a href="#" id="switchToRegister">Create an account</a></p>
+            </div>
+            
+            <div id="loginAlert" class="auth-alert"></div>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="juan@example.com" required>
+                    <div id="loginEmailError" class="form-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    <div id="loginPasswordError" class="form-error">Password is required.</div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="loginRemember"> Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn-auth">Log In</button>
+            </form>
+        </div>
+
+        <div id="registerView" class="modal-view" style="display: none;">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Account</h3>
+                <p class="modal-subtitle">Already have an account? <a href="#" id="switchToLogin">Log in here</a></p>
+            </div>
+
+            <div id="registerAlert" class="auth-alert"></div>
+
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="regName" class="form-label">Full Name</label>
+                    <input type="text" id="regName" class="form-control" placeholder="Juan Dela Cruz" required>
+                    <div id="regNameError" class="form-error">Full name is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail" class="form-label">Email Address</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="juan@example.com" required>
+                    <div id="regEmailError" class="form-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone" class="form-label">Phone Number</label>
+                    <input type="tel" id="regPhone" class="form-control" placeholder="09XXXXXXXXX" maxlength="11" required>
+                    <div id="regPhoneError" class="form-error">Must be 11 digits starting with 09.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword" class="form-label">Password</label>
+                    <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    <div id="regPasswordError" class="form-error">Must be at least 6 characters.</div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="regTerms" required> I agree to the terms
+                    </label>
+                </div>
+                <div id="regTermsError" class="form-error" style="margin-top: -1rem; margin-bottom: 1rem;">You must accept the terms.</div>
+                <button type="submit" class="btn-auth">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
