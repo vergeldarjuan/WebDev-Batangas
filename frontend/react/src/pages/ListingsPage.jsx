@@ -196,9 +196,14 @@ export function ListingsPage({ user, onOpenAuth }) {
               <p>{listing.description}</p>
               <div className="rental-price-wrap">
                 <div className="rental-price">{formatPrice(listing)}</div>
-                <button type="button" className="btn-book" onClick={() => startBooking(listing)}>
+                {
+                  listing.is_available ? <button type="button" className="btn-book" onClick={() => startBooking(listing)}>
                   Book Now
+                </button> : <button type="button" className="btn-book disabled-btn" disabled>
+                  Not Available
                 </button>
+                }
+
               </div>
             </div>
           </article>

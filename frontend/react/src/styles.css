@@ -1148,6 +1148,11 @@ section {
   background: #94301f;
 }
 
+.disabled-btn {
+  opacity: 0.48;
+  pointer-events: none;
+}
+
 .admin-secondary-btn:hover,
 .btn-action-edit:hover {
   border-color: var(--batang-l);
