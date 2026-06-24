@@ -115,8 +115,24 @@ export function UserPage({ user, setUser, onOpenAuth }) {
     }));
   };
 
-  const saveProfile = async (event) => {
-    event.preventDefault();
+  const startEditingProfile = () => {
+    setMessage('');
+    setSuccessMessage('');
+    setEditingProfile(true);
+  };
+
+  const cancelEditingProfile = () => {
+    setMessage('');
+    setSuccessMessage('');
+    setEditingProfile(false);
+    setProfile({
+      full_name: user.full_name || '',
+      email: user.email || '',
+      phone: user.phone || '',
+    });
+  };
+
+  const saveProfile = async () => {
     setMessage('');
     setSuccessMessage('');
 
@@ -199,7 +215,7 @@ export function UserPage({ user, setUser, onOpenAuth }) {
           <StatusMessage success>{successMessage}</StatusMessage>
 
           {activeTab === 'profile' && (
-            <form className="profile-form" onSubmit={saveProfile}>
+            <div className="profile-form">
               <div className="form-group">
                 <label htmlFor="profileName" className="form-label">Full Name</label>
                 <input
@@ -227,14 +243,14 @@ export function UserPage({ user, setUser, onOpenAuth }) {
               <div className="form-actions">
                 {editingProfile ? (
                   <>
-                    <button type="submit" className="btn-auth inline-btn">Save Changes</button>
-                    <button type="button" className="admin-secondary-btn" onClick={() => setEditingProfile(false)}>Cancel</button>
+                    <button type="button" className="btn-auth inline-btn" onClick={saveProfile}>Save Changes</button>
+                    <button type="button" className="admin-secondary-btn" onClick={cancelEditingProfile}>Cancel</button>
                   </>
                 ) : (
-                  <button type="button" className="btn-auth inline-btn" onClick={() => setEditingProfile(true)}>Edit Profile</button>
+                  <button type="button" className="btn-auth inline-btn" onClick={startEditingProfile}>Edit Profile</button>
                 )}
               </div>
-            </form>
+            </div>
           )}
 
           {activeTab === 'active' && (

@@ -25,17 +25,40 @@ export function ListingsPage({ user, onOpenAuth }) {
   const [selectedListing, setSelectedListing] = useState(null);
   const [pendingListing, setPendingListing] = useState(null);
   const category = searchParams.get('category') || '';
+  const revealKey = useMemo(
+    () => `${category}-${listings.map((listing) => listing.id).join('-')}`,
+    [category, listings],
+  );
 
-  useRevealAnimation(`${category}-${listings.length}`);
+  useRevealAnimation(revealKey);
 
   useEffect(() => {
+    let isCurrentRequest = true;
+
     setLoading(true);
     setMessage('');
+    setListings([]);
 
     api.listings(category ? { category } : {})
-      .then((data) => setListings(data.listings || []))
-      .catch((error) => setMessage(error.message))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (isCurrentRequest) {
+          setListings(data.listings || []);
+        }
+      })
+      .catch((error) => {
+        if (isCurrentRequest) {
+          setMessage(error.message);
+        }
+      })
+      .finally(() => {
+        if (isCurrentRequest) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isCurrentRequest = false;
+    };
   }, [category]);
 
   useEffect(() => {

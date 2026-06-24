@@ -1241,6 +1241,42 @@ textarea.form-control {
   color: var(--river-d);
 }
 
+.toast-message {
+  position: fixed;
+  top: 5.8rem;
+  right: 1.5rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: min(420px, calc(100vw - 2rem));
+  border-left: 4px solid var(--baybayin);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  padding: 0.95rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.toast-message.success {
+  border-left-color: var(--river);
+}
+
+.toast-message button {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.toast-message button:hover {
+  color: var(--baybayin);
+}
+
 /* User profile */
 .profile-layout {
   display: grid;
@@ -1737,6 +1773,14 @@ footer {
 
   .modal-card {
     padding: 2.2rem 1.4rem;
+  }
+
+  .toast-message {
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    max-width: none;
   }
 }
 

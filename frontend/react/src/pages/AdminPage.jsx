@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
-import { StatusMessage } from '../components/StatusMessage.jsx';
+import { StatusMessage, ToastMessage } from '../components/StatusMessage.jsx';
 
 const bookingStatuses = ['pending', 'confirmed', 'cancelled', 'rejected'];
 const phonePattern = /^09\d{9}$/;
@@ -92,6 +92,21 @@ export function AdminPage({ user, setUser }) {
   const [showUserForm, setShowUserForm] = useState(false);
   const [userForm, setUserForm] = useState(emptyUserForm);
 
+  const clearNotification = () => {
+    setMessage('');
+    setSuccessMessage('');
+  };
+
+  const notifyError = (text) => {
+    setSuccessMessage('');
+    setMessage(text);
+  };
+
+  const notifySuccess = (text) => {
+    setMessage('');
+    setSuccessMessage(text);
+  };
+
   const stats = useMemo(() => ({
     pending: bookings.filter((booking) => booking.status === 'pending').length,
     bookings: bookings.length,
@@ -113,7 +128,7 @@ export function AdminPage({ user, setUser }) {
       setUsers(userData.users || []);
       setStatusDrafts({});
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
@@ -122,6 +137,16 @@ export function AdminPage({ user, setUser }) {
       loadDashboardData();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!message && !successMessage) {
+      return undefined;
+    }
+
+    const timeout = window.setTimeout(clearNotification, 3500);
+
+    return () => window.clearTimeout(timeout);
+  }, [message, successMessage]);
 
   if (!user) {
     return <AdminLogin setUser={setUser} />;
@@ -141,18 +166,17 @@ export function AdminPage({ user, setUser }) {
 
   const updateStatus = async (booking) => {
     const status = statusDrafts[booking.id] || booking.status;
-    setMessage('');
-    setSuccessMessage('');
+    clearNotification();
 
     try {
       await api.updateBooking({
         id: booking.id,
         status,
       });
-      setSuccessMessage('Booking status updated.');
+      notifySuccess('Booking status updated.');
       await loadDashboardData();
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
@@ -187,11 +211,10 @@ export function AdminPage({ user, setUser }) {
 
   const saveListing = async (event) => {
     event.preventDefault();
-    setMessage('');
-    setSuccessMessage('');
+    clearNotification();
 
     if (!listingForm.title.trim() || !listingForm.description.trim() || !listingForm.location.trim() || Number(listingForm.price) < 0 || Number(listingForm.capacity) < 1) {
-      setMessage('Please complete the listing form.');
+      notifyError('Please complete the listing form.');
       return;
     }
 
@@ -207,17 +230,17 @@ export function AdminPage({ user, setUser }) {
     try {
       if (payload.id) {
         await api.updateListing(payload);
-        setSuccessMessage('Listing updated.');
+        notifySuccess('Listing updated.');
       } else {
         await api.createListing(payload);
-        setSuccessMessage('Listing created.');
+        notifySuccess('Listing created.');
       }
 
       setShowListingForm(false);
       setListingForm(emptyListingForm);
       await loadDashboardData();
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
@@ -226,21 +249,21 @@ export function AdminPage({ user, setUser }) {
       return;
     }
 
-    setMessage('');
-    setSuccessMessage('');
+    clearNotification();
 
     try {
       await api.disableListing(id);
-      setSuccessMessage('Listing disabled.');
+      notifySuccess('Listing disabled.');
       await loadDashboardData();
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
-  const loadUserDetails = async (id) => {
-    setMessage('');
-    setSuccessMessage('');
+  const loadUserDetails = async (id, options = {}) => {
+    if (!options.keepNotification) {
+      clearNotification();
+    }
 
     try {
       const data = await api.users({ id });
@@ -248,7 +271,7 @@ export function AdminPage({ user, setUser }) {
       setSelectedUserBookings(data.bookings || []);
       setShowUserForm(false);
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
@@ -274,11 +297,10 @@ export function AdminPage({ user, setUser }) {
 
   const saveUser = async (event) => {
     event.preventDefault();
-    setMessage('');
-    setSuccessMessage('');
+    clearNotification();
 
     if (!userForm.full_name.trim() || !phonePattern.test(userForm.phone.trim()) || !['user', 'admin'].includes(userForm.role)) {
-      setMessage('Please provide valid user details.');
+      notifyError('Please provide valid user details.');
       return;
     }
 
@@ -290,17 +312,21 @@ export function AdminPage({ user, setUser }) {
         role: userForm.role,
       });
 
-      setSuccessMessage('User updated.');
+      notifySuccess('User updated.');
       setShowUserForm(false);
       await loadDashboardData();
-      await loadUserDetails(data.user.id);
+      await loadUserDetails(data.user.id, { keepNotification: true });
     } catch (error) {
-      setMessage(error.message);
+      notifyError(error.message);
     }
   };
 
   return (
     <main className="page-main admin-page">
+      <ToastMessage success={Boolean(successMessage)} onClose={clearNotification}>
+        {successMessage || message}
+      </ToastMessage>
+
       <section className="admin-header">
         <div>
           <p className="section-eyebrow">Admin Dashboard</p>
@@ -309,9 +335,6 @@ export function AdminPage({ user, setUser }) {
         </div>
         <button type="button" className="admin-secondary-btn" onClick={loadDashboardData}>Refresh</button>
       </section>
-
-      <StatusMessage>{message}</StatusMessage>
-      <StatusMessage success>{successMessage}</StatusMessage>
 
       <section className="admin-stats">
         <article className="admin-stat">
