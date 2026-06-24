@@ -3,7 +3,7 @@
 session_start();
 
 define('BACKEND_PATH', dirname(__DIR__));
-define('UPLOADS_PATH', BACKEND_PATH . '/uploads');
+define('UPLOADS_PATH', getenv('UPLOADS_PATH') ?: BACKEND_PATH . '/uploads');
 
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/request.php';

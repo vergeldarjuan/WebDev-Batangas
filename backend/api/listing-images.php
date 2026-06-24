@@ -63,14 +63,18 @@ function getUploadedImage(): array {
 function saveUploadedImage(array $image): string {
     $uploadDirectory = UPLOADS_PATH . '/listings';
 
-    if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0775, true)) {
+    if (!is_dir($uploadDirectory) && !@mkdir($uploadDirectory, 0775, true)) {
         errorResponse('Could not prepare image upload folder.', 500);
+    }
+
+    if (!is_writable($uploadDirectory)) {
+        errorResponse('Image upload folder is not writable.', 500);
     }
 
     $fileName = bin2hex(random_bytes(12)) . '.' . $image['extension'];
     $targetPath = $uploadDirectory . '/' . $fileName;
 
-    if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
+    if (!@move_uploaded_file($image['tmp_name'], $targetPath)) {
         errorResponse('Could not save uploaded image.', 500);
     }
 

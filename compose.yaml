@@ -17,14 +17,16 @@ services:
       context: ./backend
     ports:
       - "8080:80"
-    volumes:
-      - .:/var/www/html
     environment:
       DB_HOST: db
       DB_PORT: 3306
       DB_NAME: ${DB_NAME:-webdev_batangas}
       DB_USER: ${DB_USER:-webdev}
       DB_PASSWORD: ${DB_PASSWORD:-webdev_dev}
+      UPLOADS_PATH: /var/www/uploads
+    volumes:
+      - .:/var/www/html
+      - upload_data:/var/www/uploads/listings
     depends_on:
       db:
         condition: service_healthy
@@ -51,3 +53,4 @@ services:
 volumes:
   db_data:
   react_node_modules:
+  upload_data:

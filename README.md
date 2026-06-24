@@ -49,6 +49,27 @@ MySQL is exposed to the host on port `3307`.
 
 Code changes are mounted into the containers, so React, HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
 
+## Listing images
+
+Seed/demo listing images are kept in:
+
+```text
+backend/uploads/listings
+```
+
+Inside Docker, uploaded listing images are served from:
+
+```text
+http://localhost:8080/uploads/listings/
+```
+
+The upload folder uses a Docker volume so Apache can write images on Windows, macOS, Linux, and WSL. If image upload fails after changing Docker settings, rebuild and recreate the web container:
+
+```bash
+docker compose down
+docker compose up -d --build
+```
+
 ## React frontend
 
 The React version is in:
