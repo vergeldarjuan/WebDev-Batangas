@@ -43,6 +43,32 @@ MySQL is exposed to the host on port `3307`.
 
 Code changes are mounted into the web container, so HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
 
+## Database
+
+MySQL runs inside Docker. On the first start, it uses these files:
+
+- `backend/database/schema.sql`
+- `backend/database/seed.sql`
+
+The seed data includes these test accounts:
+
+```text
+Admin
+Email: admin@example.com
+Password: password
+
+User
+Email: user@example.com
+Password: password
+```
+
+To reset the local database and load the schema/seed files again:
+
+```bash
+docker compose down --volumes
+docker compose up --build
+```
+
 ## Current pages
 
 - Main page for showcasing Batangas
