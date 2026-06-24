@@ -4,6 +4,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const phonePattern = /^09\d{9}$/;
     const urlParams = new URLSearchParams(window.location.search);
 
+    let openAuthModal = () => {};
+
+    // Ensure the auth modal is present on the page
+    let authModalEl = document.getElementById('authModal');
+    if (!authModalEl) {
+        const modalContainer = document.createElement('div');
+        modalContainer.id = 'authModal';
+        modalContainer.className = 'modal-overlay';
+        modalContainer.style.display = 'none';
+        modalContainer.innerHTML = `
+    <div class="modal-card">
+        <button id="modalCloseBtn" class="modal-close-btn" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div id="loginView" class="modal-view">
+            <div class="modal-header">
+                <h3 class="modal-title">Welcome Back</h3>
+                <p class="modal-subtitle">New to Batangas City? <a href="#" id="switchToRegister">Create an account</a></p>
+            </div>
+            
+            <div id="loginAlert" class="auth-alert"></div>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="juan@example.com" required>
+                    <div id="loginEmailError" class="form-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    <div id="loginPasswordError" class="form-error">Password is required.</div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="loginRemember"> Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn-auth">Log In</button>
+            </form>
+        </div>
+
+        <div id="registerView" class="modal-view" style="display: none;">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Account</h3>
+                <p class="modal-subtitle">Already have an account? <a href="#" id="switchToLogin">Log in here</a></p>
+            </div>
+
+            <div id="registerAlert" class="auth-alert"></div>
+
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="regName" class="form-label">Full Name</label>
+                    <input type="text" id="regName" class="form-control" placeholder="Juan Dela Cruz" required>
+                    <div id="regNameError" class="form-error">Full name is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail" class="form-label">Email Address</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="juan@example.com" required>
+                    <div id="regEmailError" class="form-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone" class="form-label">Phone Number</label>
+                    <input type="tel" id="regPhone" class="form-control" placeholder="09XXXXXXXXX" maxlength="11" required>
+                    <div id="regPhoneError" class="form-error">Must be 11 digits starting with 09.</div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword" class="form-label">Password</label>
+                    <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    <div id="regPasswordError" class="form-error">Must be at least 6 characters.</div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="regTerms" required> I agree to the terms
+                    </label>
+                </div>
+                <div id="regTermsError" class="form-error" style="margin-top: -1rem; margin-bottom: 1rem;">You must accept the terms.</div>
+                <button type="submit" class="btn-auth">Register</button>
+            </form>
+        </div>
+    </div>
+        `;
+        document.body.appendChild(modalContainer);
+    }
+
     // ── AUTH MODAL DOM ──
     const authModal = document.getElementById('authModal');
     const signInBtn = document.getElementById('signInBtn');
@@ -16,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authModal) {
         authModal.style.display = 'flex';
         
-        const openAuthModal = () => {
+        openAuthModal = () => {
             authModal.classList.add('active');
             showLoginView();
         };
@@ -408,7 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const id = card.getAttribute('data-id');
                 
                 if (!currentUser) {
-                    window.location.href = `index.html?triggerAuth=true&pendingBookingId=${id}`;
+                    localStorage.setItem('pendingBookingId', id);
+                    openAuthModal();
                 } else {
                     openBookingModal(card);
                 }
