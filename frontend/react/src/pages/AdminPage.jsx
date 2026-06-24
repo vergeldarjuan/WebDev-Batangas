@@ -3,6 +3,7 @@ import { api } from '../api/client.js';
 import { StatusMessage } from '../components/StatusMessage.jsx';
 
 const bookingStatuses = ['pending', 'confirmed', 'cancelled', 'rejected'];
+const phonePattern = /^09\d{9}$/;
 const emptyListingForm = {
   category_id: 1,
   title: '',
@@ -12,6 +13,13 @@ const emptyListingForm = {
   price_unit: 'per night',
   capacity: 1,
   is_available: 1,
+};
+const emptyUserForm = {
+  id: '',
+  full_name: '',
+  email: '',
+  phone: '',
+  role: 'user',
 };
 
 function AdminLogin({ setUser }) {
@@ -73,28 +81,36 @@ export function AdminPage({ user, setUser }) {
   const [activeTab, setActiveTab] = useState('bookings');
   const [bookings, setBookings] = useState([]);
   const [listings, setListings] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserBookings, setSelectedUserBookings] = useState([]);
   const [message, setMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [statusDrafts, setStatusDrafts] = useState({});
   const [showListingForm, setShowListingForm] = useState(false);
   const [listingForm, setListingForm] = useState(emptyListingForm);
+  const [showUserForm, setShowUserForm] = useState(false);
+  const [userForm, setUserForm] = useState(emptyUserForm);
 
   const stats = useMemo(() => ({
     pending: bookings.filter((booking) => booking.status === 'pending').length,
     bookings: bookings.length,
     listings: listings.length,
-  }), [bookings, listings]);
+    users: users.length,
+  }), [bookings, listings, users]);
 
   const loadDashboardData = async () => {
     setMessage('');
 
     try {
-      const [bookingData, listingData] = await Promise.all([
+      const [bookingData, listingData, userData] = await Promise.all([
         api.bookings(),
         api.listings(),
+        api.users(),
       ]);
       setBookings(bookingData.bookings || []);
       setListings(listingData.listings || []);
+      setUsers(userData.users || []);
       setStatusDrafts({});
     } catch (error) {
       setMessage(error.message);
@@ -222,6 +238,67 @@ export function AdminPage({ user, setUser }) {
     }
   };
 
+  const loadUserDetails = async (id) => {
+    setMessage('');
+    setSuccessMessage('');
+
+    try {
+      const data = await api.users({ id });
+      setSelectedUser(data.user);
+      setSelectedUserBookings(data.bookings || []);
+      setShowUserForm(false);
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
+  const openEditUser = (targetUser) => {
+    setUserForm({
+      id: targetUser.id,
+      full_name: targetUser.full_name,
+      email: targetUser.email,
+      phone: targetUser.phone,
+      role: targetUser.role,
+    });
+    setSelectedUser(targetUser);
+    setShowUserForm(true);
+    setActiveTab('users');
+  };
+
+  const updateUserField = (field, value) => {
+    setUserForm((current) => ({
+      ...current,
+      [field]: field === 'phone' ? value.replace(/\D/g, '').slice(0, 11) : value,
+    }));
+  };
+
+  const saveUser = async (event) => {
+    event.preventDefault();
+    setMessage('');
+    setSuccessMessage('');
+
+    if (!userForm.full_name.trim() || !phonePattern.test(userForm.phone.trim()) || !['user', 'admin'].includes(userForm.role)) {
+      setMessage('Please provide valid user details.');
+      return;
+    }
+
+    try {
+      const data = await api.updateUser({
+        id: userForm.id,
+        full_name: userForm.full_name.trim(),
+        phone: userForm.phone.trim(),
+        role: userForm.role,
+      });
+
+      setSuccessMessage('User updated.');
+      setShowUserForm(false);
+      await loadDashboardData();
+      await loadUserDetails(data.user.id);
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
   return (
     <main className="page-main admin-page">
       <section className="admin-header">
@@ -248,6 +325,10 @@ export function AdminPage({ user, setUser }) {
         <article className="admin-stat">
           <span>Listings</span>
           <strong>{stats.listings}</strong>
+        </article>
+        <article className="admin-stat">
+          <span>Users</span>
+          <strong>{stats.users}</strong>
         </article>
       </section>
 
@@ -429,9 +510,125 @@ export function AdminPage({ user, setUser }) {
           <div className="admin-panel-head">
             <h2>User Records</h2>
           </div>
-          <div className="admin-note">
-            User management needs a users API next. This React page is ready for the tab, while current admin tools already manage bookings and listings.
+
+          {showUserForm && (
+            <form className="admin-form" onSubmit={saveUser}>
+              <div className="admin-form-grid">
+                <div className="form-group">
+                  <label htmlFor="userName" className="form-label">Full Name</label>
+                  <input id="userName" className="form-control" value={userForm.full_name} onChange={(event) => updateUserField('full_name', event.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userEmail" className="form-label">Email Address</label>
+                  <input id="userEmail" className="form-control" value={userForm.email} disabled />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userPhone" className="form-label">Phone</label>
+                  <input id="userPhone" className="form-control" value={userForm.phone} onChange={(event) => updateUserField('phone', event.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="userRole" className="form-label">Role</label>
+                  <select id="userRole" className="form-control" value={userForm.role} onChange={(event) => updateUserField('role', event.target.value)}>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="btn-auth inline-btn">Save User</button>
+                <button type="button" className="admin-secondary-btn" onClick={() => setShowUserForm(false)}>Cancel</button>
+              </div>
+            </form>
+          )}
+
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  <th>Bookings</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      {item.full_name}
+                      <small>Joined {item.created_at}</small>
+                    </td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>
+                      <span className={item.role === 'admin' ? 'admin-badge role-admin' : 'admin-badge role-user'}>
+                        {item.role}
+                      </span>
+                    </td>
+                    <td>
+                      {item.total_bookings}
+                      <small>{item.active_bookings} active</small>
+                    </td>
+                    <td>
+                      <div className="admin-row-actions">
+                        <button type="button" className="admin-secondary-btn" onClick={() => loadUserDetails(item.id)}>View</button>
+                        <button type="button" className="admin-secondary-btn" onClick={() => openEditUser(item)}>Edit</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          {!users.length && <p className="empty-state">No registered users found.</p>}
+
+          {selectedUser && (
+            <div className="admin-detail-panel">
+              <div className="admin-panel-head">
+                <h2>{selectedUser.full_name}</h2>
+                <button type="button" className="admin-secondary-btn" onClick={() => openEditUser(selectedUser)}>Edit User</button>
+              </div>
+              <div className="admin-note">
+                {selectedUser.email} - {selectedUser.phone} - {selectedUser.role}
+              </div>
+              <h3 className="admin-subtitle">Booking History</h3>
+              <div className="admin-table-wrap">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Listing</th>
+                      <th>Category</th>
+                      <th>Dates</th>
+                      <th>Guests</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedUserBookings.map((booking) => (
+                      <tr key={booking.id}>
+                        <td>
+                          {booking.listing_title}
+                          <small>{booking.listing_location}</small>
+                        </td>
+                        <td>{booking.category_name}</td>
+                        <td>
+                          {booking.start_date}
+                          <small>to {booking.end_date}</small>
+                        </td>
+                        <td>{booking.guests}</td>
+                        <td>
+                          <span className={`booking-status ${booking.status}`}>{booking.status}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {!selectedUserBookings.length && <p className="empty-state">This user has no booking records.</p>}
+            </div>
+          )}
         </section>
       )}
     </main>

@@ -85,4 +85,10 @@ export const api = {
     method: 'DELETE',
     body: { id },
   }),
+
+  users: (params = {}) => request(buildPath('/users.php', params)),
+  updateUser: (user) => request('/users.php', {
+    method: 'PUT',
+    body: user,
+  }),
 };

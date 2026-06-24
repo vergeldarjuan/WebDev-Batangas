@@ -1002,6 +1002,16 @@ section {
   color: var(--baybayin);
 }
 
+.admin-badge.role-user {
+  background: rgba(16, 60, 60, 0.08);
+  color: var(--river-d);
+}
+
+.admin-badge.role-admin {
+  background: var(--river);
+  color: #fff;
+}
+
 .rental-info {
   display: flex;
   flex: 1;
@@ -1368,7 +1378,7 @@ textarea.form-control {
 
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   max-width: 1160px;
   margin: 0 auto 1rem;
@@ -1492,6 +1502,19 @@ textarea.form-control {
   color: var(--ink-soft);
   padding: 1rem;
   line-height: 1.6;
+}
+
+.admin-detail-panel {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.2rem;
+}
+
+.admin-subtitle {
+  margin: 1.2rem 0 0.8rem;
+  color: var(--river-d);
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.2rem;
 }
 
 /* Footer */
