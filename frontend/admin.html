@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Batangas City</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="auth.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="admin.js" defer></script>
+</head>
+<body class="admin-body">
+    <nav id="navbar" class="scrolled admin-nav">
+        <a href="index.html#hero" class="nav-logo">
+            <svg class="mark" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+                <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+                <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.2"/>
+                <circle cx="16" cy="16" r="1.6" fill="currentColor"/>
+            </svg>
+            Batangas City
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#visit">Main Site</a></li>
+            <li><a href="listings.html">Listings</a></li>
+            <li><a href="#" id="adminLogoutBtn">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="admin-shell">
+        <section id="adminLoginView" class="admin-login">
+            <div class="admin-login-panel">
+                <p class="section-eyebrow">Administrator</p>
+                <h1 class="admin-title">Dashboard Access</h1>
+                <p class="admin-copy">Sign in with an administrator account to manage booking records and listing data.</p>
+
+                <div id="adminLoginAlert" class="auth-alert"></div>
+
+                <form id="adminLoginForm" novalidate>
+                    <div class="form-group">
+                        <label for="adminEmail" class="form-label">Email Address</label>
+                        <input type="email" id="adminEmail" class="form-control" value="admin@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword" class="form-label">Password</label>
+                        <input type="password" id="adminPassword" class="form-control" value="password" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Log In</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="adminDashboardView" class="admin-dashboard" hidden>
+            <div class="admin-header">
+                <div>
+                    <p class="section-eyebrow">Admin Dashboard</p>
+                    <h1 class="admin-title">Operations Overview</h1>
+                </div>
+                <div class="admin-user-pill" id="adminUserLabel">Admin</div>
+            </div>
+
+            <div id="adminAlert" class="auth-alert"></div>
+
+            <div class="admin-stats">
+                <div class="admin-stat">
+                    <span class="admin-stat-label">Pending Bookings</span>
+                    <strong id="pendingCount">0</strong>
+                </div>
+                <div class="admin-stat">
+                    <span class="admin-stat-label">Total Bookings</span>
+                    <strong id="bookingCount">0</strong>
+                </div>
+                <div class="admin-stat">
+                    <span class="admin-stat-label">Listings</span>
+                    <strong id="listingCount">0</strong>
+                </div>
+            </div>
+
+            <div class="admin-tabs" role="tablist" aria-label="Admin sections">
+                <button class="admin-tab active" type="button" data-panel="bookingsPanel">Bookings</button>
+                <button class="admin-tab" type="button" data-panel="listingsPanel">Listings</button>
+                <button class="admin-tab" type="button" data-panel="usersPanel">Users</button>
+            </div>
+
+            <section id="bookingsPanel" class="admin-panel active">
+                <div class="admin-panel-head">
+                    <h2>Booking Records</h2>
+                    <button type="button" class="admin-secondary-btn" id="refreshBookingsBtn">Refresh</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>Listing</th>
+                                <th>Dates</th>
+                                <th>Guests</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody"></tbody>
+                    </table>
+                </div>
+                <p class="admin-empty" id="bookingsEmpty" hidden>No booking records found.</p>
+            </section>
+
+            <section id="listingsPanel" class="admin-panel">
+                <div class="admin-panel-head">
+                    <h2>Rental Listings</h2>
+                    <div class="admin-panel-actions">
+                        <button type="button" class="admin-secondary-btn" id="newListingBtn">New Listing</button>
+                        <button type="button" class="admin-secondary-btn" id="refreshListingsBtn">Refresh</button>
+                    </div>
+                </div>
+
+                <form id="listingForm" class="admin-form" hidden novalidate>
+                    <input type="hidden" id="listingId">
+                    <div class="admin-form-grid">
+                        <div class="form-group">
+                            <label for="listingTitle" class="form-label">Title</label>
+                            <input type="text" id="listingTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingCategory" class="form-label">Category</label>
+                            <select id="listingCategory" class="form-control" required>
+                                <option value="1">Apartment</option>
+                                <option value="2">Car</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingLocation" class="form-label">Location</label>
+                            <input type="text" id="listingLocation" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingPrice" class="form-label">Price</label>
+                            <input type="number" id="listingPrice" class="form-control" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingPriceUnit" class="form-label">Price Unit</label>
+                            <select id="listingPriceUnit" class="form-control" required>
+                                <option value="per night">per night</option>
+                                <option value="per day">per day</option>
+                                <option value="per trip">per trip</option>
+                                <option value="per hour">per hour</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingCapacity" class="form-label">Capacity</label>
+                            <input type="number" id="listingCapacity" class="form-control" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingAvailable" class="form-label">Available</label>
+                            <select id="listingAvailable" class="form-control" required>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group admin-form-wide">
+                            <label for="listingDescription" class="form-label">Description</label>
+                            <textarea id="listingDescription" class="form-control" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="admin-form-actions">
+                        <button type="submit" class="btn-auth" id="saveListingBtn">Save Listing</button>
+                        <button type="button" class="admin-secondary-btn" id="cancelListingBtn">Cancel</button>
+                    </div>
+                </form>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Capacity</th>
+                                <th>Available</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="listingsTableBody"></tbody>
+                    </table>
+                </div>
+                <p class="admin-empty" id="listingsEmpty" hidden>No listing records found.</p>
+            </section>
+
+            <section id="usersPanel" class="admin-panel">
+                <div class="admin-panel-head">
+                    <h2>User Records</h2>
+                </div>
+                <div class="admin-note">
+                    User management needs a dedicated users API next. For now, this dashboard confirms admin access and manages booking status through the existing bookings API.
+                </div>
+            </section>
+        </section>
+    </main>
+</body>
+</html>
