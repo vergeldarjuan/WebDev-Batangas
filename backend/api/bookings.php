@@ -80,6 +80,7 @@ try {
                 listings.location AS listing_location,
                 listings.price AS listing_price,
                 listings.price_unit AS listing_price_unit,
+                listings.capacity AS listing_capacity,
                 categories.name AS category_name,
                 bookings.start_date,
                 bookings.end_date,

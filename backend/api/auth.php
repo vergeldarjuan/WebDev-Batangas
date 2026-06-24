@@ -37,6 +37,33 @@ try {
         ]);
     }
 
+    if ($method === 'PUT') {
+        $userId = $_SESSION['user_id'] ?? null;
+
+        if (!$userId) {
+            errorResponse('You must be logged in.', 401);
+        }
+
+        $data = getRequestData();
+        $fullName = trim($data['full_name'] ?? '');
+        $phone = trim($data['phone'] ?? '');
+
+        if ($fullName === '' || strlen($fullName) > 100 || !preg_match('/^09[0-9]{9}$/', $phone)) {
+            errorResponse('Please provide valid profile details.');
+        }
+
+        $statement = $pdo->prepare('UPDATE users SET full_name = ?, phone = ? WHERE id = ?');
+        $statement->execute([$fullName, $phone, (int) $userId]);
+
+        $user = findUserById($pdo, (int) $userId);
+
+        jsonResponse([
+            'success' => true,
+            'message' => 'Profile updated.',
+            'user' => publicUser($user),
+        ]);
+    }
+
     if ($method !== 'POST') {
         errorResponse('Method not allowed.', 405);
     }

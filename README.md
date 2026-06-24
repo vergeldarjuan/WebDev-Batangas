@@ -43,6 +43,62 @@ MySQL is exposed to the host on port `3307`.
 
 Code changes are mounted into the web container, so HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
 
+## React frontend
+
+The React version is in:
+
+```text
+frontend/react
+```
+
+Keep Docker running for PHP and MySQL:
+
+```bash
+docker compose up
+```
+
+Then run the React dev server:
+
+```bash
+cd frontend/react
+npm install
+npm run dev
+```
+
+Open the React app at:
+
+```text
+http://localhost:5173
+```
+
+If PowerShell blocks `npm`, use `npm.cmd` instead:
+
+```powershell
+npm.cmd install
+npm.cmd run dev
+```
+
+During development, React calls the backend through `/api`. Vite proxies those requests to the PHP API running on Apache.
+
+Apache is also configured to expose the PHP APIs under:
+
+```text
+http://localhost:8080/api/
+```
+
+Rebuild the web image after changing Apache or Dockerfile settings:
+
+```bash
+docker compose up --build
+```
+
+Create a production build with:
+
+```bash
+cd frontend/react
+npm run build
+```
+
 ## Database
 
 MySQL runs inside Docker. On the first start, it uses these files:
@@ -71,10 +127,10 @@ docker compose up --build
 
 ## Current pages
 
-- Main page for showcasing Batangas
-- Listings page for rentals and bookable services
-- User page for profile details and bookings
-- Admin page for managing users, listings, and listing images
+- Main tourism page for showcasing Batangas
+- Listings page for rentals and booking requests
+- User page for profile details and booking management
+- Admin page for booking status and listing management
 
 ## Stop the project
 
