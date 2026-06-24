@@ -2,17 +2,6 @@
 
 require_once __DIR__ . '/../app/init.php';
 
-function getRequestData(): array {
-    $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
-
-    if (str_contains($contentType, 'application/json')) {
-        $data = json_decode(file_get_contents('php://input'), true);
-        return is_array($data) ? $data : [];
-    }
-
-    return $_POST;
-}
-
 function publicUser(array $user): array {
     return [
         'id' => (int) $user['id'],
