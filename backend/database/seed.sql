@@ -1,6 +1,6 @@
 INSERT INTO users (id, full_name, email, password_hash, phone, role) VALUES
-    (1, 'Admin User', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC2pGQRbw96W8xjuRNCW', '09123456789', 'admin'),
-    (2, 'Sample User', 'user@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC2pGQRbw96W8xjuRNCW', '09987654321', 'user');
+    (1, 'Admin User', 'admin@example.com', '$2y$12$UwTZmWBpz8EAwJj5O1qTh.Pyy7Y/8z7PWZE9v0LKtZmXWLuirBJIC', '09123456789', 'admin'),
+    (2, 'Sample User', 'user@example.com', '$2y$12$UwTZmWBpz8EAwJj5O1qTh.Pyy7Y/8z7PWZE9v0LKtZmXWLuirBJIC', '09987654321', 'user');
 
 INSERT INTO categories (id, name, description) VALUES
     (1, 'Apartment', 'Places to stay for tourists visiting Batangas.'),
