@@ -38,18 +38,9 @@ export function HomePage() {
 
       <section id="origin">
         <div className="origin-art reveal">
-          <svg className="batang-rings" viewBox="0 0 380 380" fill="none" aria-hidden="true">
-            <circle cx="190" cy="190" r="170" stroke="#8a5a36" strokeWidth="1.5" opacity="0.25" />
-            <circle cx="190" cy="190" r="138" stroke="#8a5a36" strokeWidth="1.5" opacity="0.35" />
-            <circle cx="190" cy="190" r="106" stroke="#8a5a36" strokeWidth="1.5" opacity="0.5" />
-            <circle cx="190" cy="190" r="74" stroke="#8a5a36" strokeWidth="1.5" opacity="0.7" />
-            <circle cx="190" cy="190" r="42" stroke="#b3402f" strokeWidth="2" />
-            <circle cx="190" cy="190" r="10" fill="#b3402f" />
-            <path d="M40,120 L340,120" stroke="#103c3c" strokeWidth="0.6" opacity="0.3" />
-            <path d="M30,250 L350,250" stroke="#103c3c" strokeWidth="0.6" opacity="0.3" />
-          </svg>
+          <img src="/images/capitol.png" alt="Batangas Provincial Capitol" className="origin-image" />
           <p className="origin-caption">
-            A cross-section inspired by the batang, the floating logs that gave the riverside settlement its name.
+            The Batangas Provincial Capitol, a neoclassical landmark representing the province's rich governance and heritage.
           </p>
         </div>
         <div className="origin-text reveal reveal-delay-1">
