@@ -1698,6 +1698,18 @@ textarea.form-control {
   font-size: 1.2rem;
 }
 
+.booking-notes {
+  display: block;
+  max-width: 250px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.empty-notes {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
 /* Footer */
 footer {
   padding: 4rem 3rem 2rem;

@@ -409,6 +409,7 @@ export function AdminPage({ user, setUser }) {
                   <th>Listing</th>
                   <th>Dates</th>
                   <th>Guests</th>
+                  <th>Notes</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -429,6 +430,13 @@ export function AdminPage({ user, setUser }) {
                       <small>to {booking.end_date}</small>
                     </td>
                     <td>{booking.guests}</td>
+                    <td>
+                      {booking.notes ? (
+                        <span className="booking-notes">{booking.notes}</span>
+                      ) : (
+                        <span className="empty-notes">—</span>
+                      )}
+                    </td>
                     <td>
                       <select
                         className="form-control table-select"
@@ -701,6 +709,7 @@ export function AdminPage({ user, setUser }) {
                       <th>Category</th>
                       <th>Dates</th>
                       <th>Guests</th>
+                      <th>Notes</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -717,6 +726,13 @@ export function AdminPage({ user, setUser }) {
                           <small>to {booking.end_date}</small>
                         </td>
                         <td>{booking.guests}</td>
+                        <td>
+                          {booking.notes ? (
+                            <span className="booking-notes">{booking.notes}</span>
+                          ) : (
+                            <span className="empty-notes">—</span>
+                          )}
+                        </td>
                         <td>
                           <span className={`booking-status ${booking.status}`}>{booking.status}</span>
                         </td>
