@@ -13,7 +13,7 @@ docker compose version
 
 ## Run the project
 
-For the first run, build the PHP image and start the services:
+For the first run, build the images and start the services:
 
 ```bash
 docker compose up --build
@@ -25,9 +25,15 @@ For normal runs after the image has been built:
 docker compose up
 ```
 
-Use `--build` again only after changing the `Dockerfile` or other image dependencies. Changes to mounted HTML, CSS, JavaScript, and PHP files do not require rebuilding.
+Use `--build` again only after changing a `Dockerfile`, package dependencies, or other image dependencies. Changes to mounted React, HTML, CSS, JavaScript, and PHP files do not require rebuilding.
 
-Open the frontend at:
+Open the React frontend at:
+
+```text
+http://localhost:5173
+```
+
+The old static frontend is still available at:
 
 ```text
 http://localhost:8080/frontend/
@@ -36,12 +42,12 @@ http://localhost:8080/frontend/
 The PHP API is available under:
 
 ```text
-http://localhost:8080/backend/api/
+http://localhost:8080/api/
 ```
 
 MySQL is exposed to the host on port `3307`.
 
-Code changes are mounted into the web container, so HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
+Code changes are mounted into the containers, so React, HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
 
 ## React frontend
 
@@ -51,24 +57,26 @@ The React version is in:
 frontend/react
 ```
 
-Keep Docker running for PHP and MySQL:
+Docker runs the React dev server, PHP backend, and MySQL together:
 
 ```bash
-docker compose up
-```
-
-Then run the React dev server:
-
-```bash
-cd frontend/react
-npm install
-npm run dev
+docker compose up --build
 ```
 
 Open the React app at:
 
 ```text
 http://localhost:5173
+```
+
+React calls the backend through `/api`. Inside Docker, Vite proxies those requests to the PHP service.
+
+You can still run React directly on your machine if you prefer:
+
+```bash
+cd frontend/react
+npm install
+npm run dev
 ```
 
 If PowerShell blocks `npm`, use `npm.cmd` instead:
@@ -78,15 +86,13 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-During development, React calls the backend through `/api`. Vite proxies those requests to the PHP API running on Apache.
-
 Apache is also configured to expose the PHP APIs under:
 
 ```text
 http://localhost:8080/api/
 ```
 
-Rebuild the web image after changing Apache or Dockerfile settings:
+Rebuild the images after changing Apache, Dockerfile, or package settings:
 
 ```bash
 docker compose up --build
