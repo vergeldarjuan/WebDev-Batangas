@@ -71,6 +71,18 @@ export const api = {
     method: 'DELETE',
     body: { id },
   }),
+  uploadListingImage: (listingId, image, isPrimary = true) => {
+    const formData = new FormData();
+
+    formData.set('listing_id', listingId);
+    formData.set('image', image);
+    formData.set('is_primary', isPrimary ? '1' : '0');
+
+    return request('/listing-images.php', {
+      method: 'POST',
+      body: formData,
+    });
+  },
 
   bookings: (params = {}) => request(buildPath('/bookings.php', params)),
   createBooking: (booking) => request('/bookings.php', {

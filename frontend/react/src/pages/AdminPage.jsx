@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 import { StatusMessage, ToastMessage } from '../components/StatusMessage.jsx';
+import { getListingImage } from '../data/siteContent.js';
 
 const bookingStatuses = ['pending', 'confirmed', 'cancelled', 'rejected'];
 const phonePattern = /^09\d{9}$/;
@@ -89,8 +90,20 @@ export function AdminPage({ user, setUser }) {
   const [statusDrafts, setStatusDrafts] = useState({});
   const [showListingForm, setShowListingForm] = useState(false);
   const [listingForm, setListingForm] = useState(emptyListingForm);
+  const [listingImageFile, setListingImageFile] = useState(null);
+  const [listingImagePrimary, setListingImagePrimary] = useState(true);
   const [showUserForm, setShowUserForm] = useState(false);
   const [userForm, setUserForm] = useState(emptyUserForm);
+  const listingImagePreview = useMemo(
+    () => (listingImageFile ? URL.createObjectURL(listingImageFile) : ''),
+    [listingImageFile],
+  );
+
+  useEffect(() => () => {
+    if (listingImagePreview) {
+      URL.revokeObjectURL(listingImagePreview);
+    }
+  }, [listingImagePreview]);
 
   const clearNotification = () => {
     setMessage('');
@@ -182,6 +195,8 @@ export function AdminPage({ user, setUser }) {
 
   const openCreateListing = () => {
     setListingForm(emptyListingForm);
+    setListingImageFile(null);
+    setListingImagePrimary(true);
     setShowListingForm(true);
     setActiveTab('listings');
   };
@@ -197,9 +212,21 @@ export function AdminPage({ user, setUser }) {
       price_unit: listing.price_unit,
       capacity: Number(listing.capacity),
       is_available: Number(listing.is_available),
+      category_name: listing.category_name,
+      primary_image_path: listing.primary_image_path,
+      images: listing.images || [],
+      image_count: Number(listing.image_count || 0),
     });
+    setListingImageFile(null);
+    setListingImagePrimary(true);
     setShowListingForm(true);
     setActiveTab('listings');
+  };
+
+  const closeListingForm = () => {
+    setShowListingForm(false);
+    setListingImageFile(null);
+    setListingImagePrimary(true);
   };
 
   const updateListingField = (field, value) => {
@@ -228,15 +255,23 @@ export function AdminPage({ user, setUser }) {
     };
 
     try {
+      let listingId = payload.id;
+
       if (payload.id) {
         await api.updateListing(payload);
         notifySuccess('Listing updated.');
       } else {
-        await api.createListing(payload);
+        const data = await api.createListing(payload);
+        listingId = data.listing_id;
         notifySuccess('Listing created.');
       }
 
-      setShowListingForm(false);
+      if (listingImageFile) {
+        await api.uploadListingImage(listingId, listingImageFile, listingImagePrimary);
+        notifySuccess(payload.id ? 'Listing and image updated.' : 'Listing created with image.');
+      }
+
+      closeListingForm();
       setListingForm(emptyListingForm);
       await loadDashboardData();
     } catch (error) {
@@ -474,10 +509,46 @@ export function AdminPage({ user, setUser }) {
                   <label htmlFor="listingDescription" className="form-label">Description</label>
                   <textarea id="listingDescription" className="form-control" rows="3" value={listingForm.description} onChange={(event) => updateListingField('description', event.target.value)} />
                 </div>
+                <div className="form-group admin-form-wide">
+                  <span className="form-label">Listing Image</span>
+                  <div className="admin-image-upload">
+                    {(listingImagePreview || listingForm.primary_image_path) && (
+                      <img
+                        className="admin-image-preview"
+                        src={listingImagePreview || getListingImage(listingForm)}
+                        alt={listingForm.title || 'Listing preview'}
+                      />
+                    )}
+                    <div>
+                      <label htmlFor="listingImage" className="admin-file-button">Choose Image</label>
+                      <input
+                        id="listingImage"
+                        className="admin-file-input"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={(event) => setListingImageFile(event.target.files?.[0] || null)}
+                      />
+                      <p className="admin-help-text">
+                        {listingImageFile ? listingImageFile.name : 'JPG, PNG, or WebP. Maximum 5MB.'}
+                      </p>
+                      <label className="admin-check">
+                        <input
+                          type="checkbox"
+                          checked={listingImagePrimary}
+                          onChange={(event) => setListingImagePrimary(event.target.checked)}
+                        />
+                        Set as main image
+                      </label>
+                      {listingForm.image_count > 0 && (
+                        <p className="admin-help-text">{listingForm.image_count} image{listingForm.image_count === 1 ? '' : 's'} saved for this listing.</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="form-actions">
                 <button type="submit" className="btn-auth inline-btn">{listingForm.id ? 'Update Listing' : 'Create Listing'}</button>
-                <button type="button" className="admin-secondary-btn" onClick={() => setShowListingForm(false)}>Cancel</button>
+                <button type="button" className="admin-secondary-btn" onClick={closeListingForm}>Cancel</button>
               </div>
             </form>
           )}
@@ -486,6 +557,7 @@ export function AdminPage({ user, setUser }) {
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th>Image</th>
                   <th>Title</th>
                   <th>Category</th>
                   <th>Location</th>
@@ -498,6 +570,10 @@ export function AdminPage({ user, setUser }) {
               <tbody>
                 {listings.map((listing) => (
                   <tr key={listing.id}>
+                    <td>
+                      <img className="admin-listing-thumb" src={getListingImage(listing)} alt={listing.title} />
+                      <small>{listing.image_count || 0} image{Number(listing.image_count || 0) === 1 ? '' : 's'}</small>
+                    </td>
                     <td>
                       {listing.title}
                       <small>{listing.description}</small>

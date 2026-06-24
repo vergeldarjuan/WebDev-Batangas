@@ -13,6 +13,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/backend/api'),
       },
+      '/uploads': {
+        target: apiTarget,
+        changeOrigin: true,
+      },
     },
   },
   build: {

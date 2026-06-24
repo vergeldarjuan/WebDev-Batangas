@@ -174,8 +174,7 @@ export const events = [
   },
 ];
 
-
-export function getListingImage(listing) {
+function getFallbackListingImage(listing) {
   const title = `${listing?.title || ''}`.toLowerCase();
   const category = `${listing?.category_name || ''}`.toLowerCase();
 
@@ -196,4 +195,25 @@ export function getListingImage(listing) {
   }
 
   return '/images/destinations/basilica.jpg';
+}
+
+export function getListingImage(listing) {
+  const primaryImage = listing?.primary_image_path
+    || listing?.images?.find((image) => Number(image.is_primary) === 1)?.image_path
+    || listing?.images?.[0]?.image_path;
+
+  return primaryImage || getFallbackListingImage(listing);
+}
+
+export function getListingImages(listing) {
+  const imagePaths = Array.isArray(listing?.images)
+    ? listing.images.map((image) => image.image_path).filter(Boolean)
+    : [];
+  const primaryImage = getListingImage(listing);
+  const orderedImages = [
+    primaryImage,
+    ...imagePaths.filter((imagePath) => imagePath !== primaryImage),
+  ];
+
+  return orderedImages.filter((imagePath, index) => orderedImages.indexOf(imagePath) === index);
 }
