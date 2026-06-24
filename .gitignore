@@ -1,3 +1,4 @@
 cookies.txt
 frontend/react/node_modules/
+frontend/react/.vite/
 frontend/dist/
