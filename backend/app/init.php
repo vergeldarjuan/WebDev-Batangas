@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 define('BACKEND_PATH', dirname(__DIR__));
 define('UPLOADS_PATH', BACKEND_PATH . '/uploads');
 
