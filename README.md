@@ -43,6 +43,13 @@ MySQL is exposed to the host on port `3307`.
 
 Code changes are mounted into the web container, so HTML, CSS, JavaScript, and PHP updates appear after refreshing the browser.
 
+## Current pages
+
+- Main page for showcasing Batangas
+- Listings page for rentals and bookable services
+- User page for profile details and bookings
+- Admin page for managing users, listings, and listing images
+
 ## Stop the project
 
 When Compose is running in the terminal, press `Ctrl+C`.

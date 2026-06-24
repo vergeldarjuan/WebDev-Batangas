@@ -5,6 +5,7 @@ The website will have three main parts:
 - A main page that introduces and showcases Batangas
 - A listings page for rentals and bookable services
 - A user page where users can view/edit their info and manage bookings
+- An admin page where admins can manage users, listings, and listing images
 
 ## Main Tables
 
@@ -19,6 +20,7 @@ Fields:
 - `email`
 - `password_hash`
 - `phone`
+- `role`
 - `created_at`
 - `updated_at`
 
@@ -27,6 +29,7 @@ Notes:
 - `email` should be unique because it will be used for login.
 - `password_hash` stores the hashed password, not the plain password.
 - `phone` can use the local 11-digit format, like `09XXXXXXXXX`.
+- `role` can be `user` or `admin`.
 
 For passwords, we should only save the hashed version in the database. In PHP, use `password_hash()` when creating the account and `password_verify()` when logging in.
 
@@ -41,18 +44,14 @@ Fields:
 - `description`
 - `created_at`
 
-Possible categories:
+Current categories:
 
 - Apartment
 - Car
-- Van
-- Boat
-- Tour Guide
-- Cottage
 
 ### listings
 
-Stores the places, vehicles, or services that users can book. For now, these will come from seed data and will not be created by users.
+Stores the places, vehicles, or services that users can book. These can be prepared through seed data first, then managed by admins later.
 
 Fields:
 
@@ -128,10 +127,12 @@ Notes:
 
 Possible `status` values:
 
+- `pending`
 - `confirmed`
 - `cancelled`
+- `rejected`
 
-When a user makes a booking, it will be saved as `confirmed` right away. If the user removes or cancels the booking, the status can be changed to `cancelled`.
+When a user makes a booking, it will be saved as `pending` first. An admin can change it to `confirmed` or `rejected`. If the booking is cancelled, the status can be changed to `cancelled`.
 
 ## Table Connections
 
@@ -145,4 +146,6 @@ When a user makes a booking, it will be saved as `confirmed` right away. If the 
 - Users can register, view their profile, and update their profile.
 - Users can view available listings.
 - Users can create, view, update, and delete bookings.
-- Listings and listing images will be prepared through seed data.
+- Admins can view and manage user records.
+- Admins can create, view, update, and delete listings.
+- Admins can update listing images.
