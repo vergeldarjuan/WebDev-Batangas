@@ -112,8 +112,65 @@
             <section id="listingsPanel" class="admin-panel">
                 <div class="admin-panel-head">
                     <h2>Rental Listings</h2>
-                    <button type="button" class="admin-secondary-btn" id="refreshListingsBtn">Refresh</button>
+                    <div class="admin-panel-actions">
+                        <button type="button" class="admin-secondary-btn" id="newListingBtn">New Listing</button>
+                        <button type="button" class="admin-secondary-btn" id="refreshListingsBtn">Refresh</button>
+                    </div>
                 </div>
+
+                <form id="listingForm" class="admin-form" hidden novalidate>
+                    <input type="hidden" id="listingId">
+                    <div class="admin-form-grid">
+                        <div class="form-group">
+                            <label for="listingTitle" class="form-label">Title</label>
+                            <input type="text" id="listingTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingCategory" class="form-label">Category</label>
+                            <select id="listingCategory" class="form-control" required>
+                                <option value="1">Apartment</option>
+                                <option value="2">Car</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingLocation" class="form-label">Location</label>
+                            <input type="text" id="listingLocation" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingPrice" class="form-label">Price</label>
+                            <input type="number" id="listingPrice" class="form-control" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingPriceUnit" class="form-label">Price Unit</label>
+                            <select id="listingPriceUnit" class="form-control" required>
+                                <option value="per night">per night</option>
+                                <option value="per day">per day</option>
+                                <option value="per trip">per trip</option>
+                                <option value="per hour">per hour</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingCapacity" class="form-label">Capacity</label>
+                            <input type="number" id="listingCapacity" class="form-control" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="listingAvailable" class="form-label">Available</label>
+                            <select id="listingAvailable" class="form-control" required>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group admin-form-wide">
+                            <label for="listingDescription" class="form-label">Description</label>
+                            <textarea id="listingDescription" class="form-control" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="admin-form-actions">
+                        <button type="submit" class="btn-auth" id="saveListingBtn">Save Listing</button>
+                        <button type="button" class="admin-secondary-btn" id="cancelListingBtn">Cancel</button>
+                    </div>
+                </form>
+
                 <div class="admin-table-wrap">
                     <table class="admin-table">
                         <thead>
@@ -124,6 +181,7 @@
                                 <th>Price</th>
                                 <th>Capacity</th>
                                 <th>Available</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="listingsTableBody"></tbody>

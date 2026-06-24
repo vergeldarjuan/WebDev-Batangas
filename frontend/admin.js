@@ -21,6 +21,21 @@ $(function () {
     const $listingsEmpty = $('#listingsEmpty');
     const $refreshBookingsBtn = $('#refreshBookingsBtn');
     const $refreshListingsBtn = $('#refreshListingsBtn');
+    const $newListingBtn = $('#newListingBtn');
+    const $listingForm = $('#listingForm');
+    const $listingId = $('#listingId');
+    const $listingTitle = $('#listingTitle');
+    const $listingCategory = $('#listingCategory');
+    const $listingLocation = $('#listingLocation');
+    const $listingPrice = $('#listingPrice');
+    const $listingPriceUnit = $('#listingPriceUnit');
+    const $listingCapacity = $('#listingCapacity');
+    const $listingAvailable = $('#listingAvailable');
+    const $listingDescription = $('#listingDescription');
+    const $saveListingBtn = $('#saveListingBtn');
+    const $cancelListingBtn = $('#cancelListingBtn');
+
+    let currentListings = [];
 
     const showAlert = ($element, message, isSuccess = false) => {
         $element
@@ -32,6 +47,8 @@ $(function () {
     const hideAlert = ($element) => {
         $element.text('').hide();
     };
+
+    const escapeHtml = (value) => $('<div>').text(value ?? '').html();
 
     const requestJson = (url, options = {}) => {
         const requestBody = options.body && typeof options.body !== 'string'
@@ -85,6 +102,62 @@ $(function () {
         return `PHP ${price} ${listing.price_unit}`;
     };
 
+    const hideListingForm = () => {
+        $listingForm.prop('hidden', true);
+        $listingForm[0].reset();
+        $listingId.val('');
+        $saveListingBtn.text('Save Listing');
+    };
+
+    const showListingForm = (listing = null) => {
+        hideAlert($adminAlert);
+        $listingForm.prop('hidden', false);
+
+        if (!listing) {
+            $listingForm[0].reset();
+            $listingId.val('');
+            $listingAvailable.val('1');
+            $saveListingBtn.text('Create Listing');
+            $listingTitle.trigger('focus');
+            return;
+        }
+
+        $listingId.val(listing.id);
+        $listingTitle.val(listing.title);
+        $listingCategory.val(listing.category_id);
+        $listingLocation.val(listing.location);
+        $listingPrice.val(listing.price);
+        $listingPriceUnit.val(listing.price_unit);
+        $listingCapacity.val(listing.capacity);
+        $listingAvailable.val(Number(listing.is_available));
+        $listingDescription.val(listing.description);
+        $saveListingBtn.text('Update Listing');
+        $listingTitle.trigger('focus');
+    };
+
+    const getListingFormData = () => {
+        const listing = {
+            category_id: Number($listingCategory.val()),
+            title: $listingTitle.val().trim(),
+            description: $listingDescription.val().trim(),
+            location: $listingLocation.val().trim(),
+            price: Number($listingPrice.val()),
+            price_unit: $listingPriceUnit.val(),
+            capacity: Number($listingCapacity.val()),
+            is_available: Number($listingAvailable.val()),
+        };
+
+        if ($listingId.val()) {
+            listing.id = Number($listingId.val());
+        }
+
+        if (!listing.category_id || !listing.title || !listing.description || !listing.location || Number.isNaN(listing.price) || listing.price < 0 || !listing.price_unit || !listing.capacity || listing.capacity < 1) {
+            throw new Error('Please complete the listing form.');
+        }
+
+        return listing;
+    };
+
     const renderBookings = (bookings) => {
         $bookingsTableBody.empty();
         $bookingsEmpty.prop('hidden', bookings.length > 0);
@@ -128,6 +201,7 @@ $(function () {
     };
 
     const renderListings = (listings) => {
+        currentListings = listings;
         $listingsTableBody.empty();
         $listingsEmpty.prop('hidden', listings.length > 0);
         $listingCount.text(listings.length);
@@ -137,15 +211,21 @@ $(function () {
             const row = `
                 <tr>
                     <td>
-                        ${listing.title}
-                        <small>${listing.description}</small>
+                        ${escapeHtml(listing.title)}
+                        <small>${escapeHtml(listing.description)}</small>
                     </td>
-                    <td>${listing.category_name}</td>
-                    <td>${listing.location}</td>
-                    <td>${formatPrice(listing)}</td>
-                    <td>${listing.capacity}</td>
+                    <td>${escapeHtml(listing.category_name)}</td>
+                    <td>${escapeHtml(listing.location)}</td>
+                    <td>${escapeHtml(formatPrice(listing))}</td>
+                    <td>${escapeHtml(listing.capacity)}</td>
                     <td>
                         <span class="admin-badge ${isAvailable ? '' : 'no'}">${isAvailable ? 'Yes' : 'No'}</span>
+                    </td>
+                    <td>
+                        <div class="admin-row-actions">
+                            <button type="button" data-edit-listing="${listing.id}">Edit</button>
+                            ${isAvailable ? `<button type="button" class="admin-danger-btn" data-disable-listing="${listing.id}">Disable</button>` : ''}
+                        </div>
                     </td>
                 </tr>
             `;
@@ -265,6 +345,67 @@ $(function () {
 
     $refreshBookingsBtn.on('click', () => runPanelRequest(loadBookings));
     $refreshListingsBtn.on('click', () => runPanelRequest(loadListings));
+    $newListingBtn.on('click', () => showListingForm());
+    $cancelListingBtn.on('click', hideListingForm);
+
+    $listingForm.on('submit', async (event) => {
+        event.preventDefault();
+
+        try {
+            const listing = getListingFormData();
+            const isEdit = Boolean(listing.id);
+
+            $saveListingBtn.prop('disabled', true).text(isEdit ? 'Updating' : 'Creating');
+
+            await requestJson(listingsApi, {
+                method: isEdit ? 'PUT' : 'POST',
+                body: listing,
+            });
+
+            showAlert($adminAlert, isEdit ? 'Listing updated.' : 'Listing created.', true);
+            hideListingForm();
+            await loadListings();
+        } catch (error) {
+            showAlert($adminAlert, error.message);
+        } finally {
+            $saveListingBtn.prop('disabled', false);
+            $saveListingBtn.text($listingId.val() ? 'Update Listing' : 'Create Listing');
+        }
+    });
+
+    $listingsTableBody.on('click', '[data-edit-listing]', function () {
+        const listingId = Number($(this).data('edit-listing'));
+        const listing = currentListings.find(item => Number(item.id) === listingId);
+
+        if (listing) {
+            showListingForm(listing);
+        }
+    });
+
+    $listingsTableBody.on('click', '[data-disable-listing]', async function () {
+        const $button = $(this);
+        const listingId = Number($button.data('disable-listing'));
+
+        if (!window.confirm('Disable this listing? Existing booking records will remain.')) {
+            return;
+        }
+
+        $button.prop('disabled', true).text('Disabling');
+
+        try {
+            await requestJson(listingsApi, {
+                method: 'DELETE',
+                body: { id: listingId },
+            });
+            showAlert($adminAlert, 'Listing disabled.', true);
+            hideListingForm();
+            await loadListings();
+        } catch (error) {
+            showAlert($adminAlert, error.message);
+        } finally {
+            $button.prop('disabled', false).text('Disable');
+        }
+    });
 
     checkSession().catch(() => {
         showLogin();

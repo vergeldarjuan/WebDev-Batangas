@@ -158,6 +158,14 @@
   font-weight: 600;
 }
 
+.admin-panel-actions,
+.admin-form-actions,
+.admin-row-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .admin-secondary-btn,
 .admin-table button {
   border: 1px solid var(--line);
@@ -177,6 +185,43 @@
   border-color: var(--batang-l);
 }
 
+.admin-danger-btn {
+  border-color: rgba(179, 64, 47, 0.24);
+  color: var(--baybayin);
+}
+
+.admin-danger-btn:hover {
+  background: rgba(179, 64, 47, 0.06);
+  border-color: var(--baybayin);
+}
+
+.admin-form {
+  border-bottom: 1px solid var(--line);
+  padding: 1.25rem;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admin-form-wide {
+  grid-column: 1 / -1;
+}
+
+.admin-form-actions {
+  justify-content: flex-end;
+  margin-top: 0.3rem;
+}
+
+.admin-form-actions .btn-auth {
+  margin-top: 0;
+  width: auto;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+}
+
 .admin-table-wrap {
   overflow-x: auto;
 }
@@ -184,7 +229,7 @@
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 760px;
+  min-width: 860px;
 }
 
 .admin-table th,
@@ -271,5 +316,13 @@
   .admin-panel-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-actions {
+    justify-content: flex-start;
   }
 }
