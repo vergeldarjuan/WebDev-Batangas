@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import {
-  cityRoles,
   destinations,
   events,
   facts,
   foods,
   heritageItems,
+  provinceRoles,
   timeline,
 } from '../data/siteContent.js';
 import { useRevealAnimation } from '../hooks/useRevealAnimation.js';
@@ -78,11 +78,12 @@ export function HomePage() {
             <div className="about-image-label">Baroque-era basilica architecture, Batangas province</div>
           </div>
           <div className="about-text reveal reveal-delay-1">
-            <p className="section-eyebrow">Built on Faith and Trade</p>
-            <h2 className="section-title">A Capital Long Before It Was a City</h2>
+            <p className="section-eyebrow">Rich in Culture and Devotion</p>
+            <h2 className="section-title">A History of Resiliency and Faith</h2>
             <p className="section-body">
-              Long before its 1969 charter, Batangas was already the seat of the province. Its identity was shaped
-              by the church, the port, and the people known for a distinct Tagalog dialect and a hardworking spirit.
+              Batangas province has long been a center of faith, agriculture, and resistance against colonial rule.
+              Its identity is forged by historical landmarks, old stone churches, and a people renowned for their
+              distinct Tagalog dialect, warm hospitality, and revolutionary spirit.
             </p>
             <div className="heritage-list">
               {heritageItems.map((item) => (
@@ -101,14 +102,14 @@ export function HomePage() {
 
       <section id="role">
         <div className="section-head reveal">
-          <p className="section-eyebrow">What the City Does</p>
-          <h2 className="section-title">More Than a Stopover</h2>
+          <p className="section-eyebrow">What the Province Represents</p>
+          <h2 className="section-title">A Land of Valor and Growth</h2>
           <p className="section-body">
-            Batangas City carries three jobs at once: provincial capital, regional economic hub, and nautical gateway south.
+            Batangas Province is a cornerstone of Philippine heritage, an economic dynamo, and a sanctuary of natural beauty.
           </p>
         </div>
         <div className="role-grid">
-          {cityRoles.map((role, index) => (
+          {provinceRoles.map((role, index) => (
             <article key={role.title} className={`role-card reveal reveal-delay-${index}`}>
               <div className="role-num">{role.number} / {role.label}</div>
               <div className="role-title">{role.title}</div>
@@ -120,10 +121,10 @@ export function HomePage() {
 
       <section id="destinations">
         <div className="section-head reveal">
-          <p className="section-eyebrow">In and Around the City</p>
-          <h2 className="section-title">What is Worth the Drive</h2>
+          <p className="section-eyebrow">Across the Province</p>
+          <h2 className="section-title">Wonders of Batangas</h2>
           <p className="section-body">
-            The city is close to coastal drives, heritage towns, volcano views, and everyday port life.
+            From breathtaking coastal dive spots and pristine beaches to historic heritage towns and volcano landscapes.
           </p>
         </div>
         <div className="dest-grid">
@@ -140,27 +141,27 @@ export function HomePage() {
         </div>
 
         <div className="how-to-get reveal">
-          <div className="how-title">How to Get to Batangas City</div>
+          <div className="how-title">How to Get to Batangas Province</div>
           <div className="how-routes">
             <div className="route">
               <div className="route-icon" aria-hidden="true">BUS</div>
               <div className="route-info">
                 <h4>By Bus from Manila</h4>
-                <p>Buses run from Buendia and Cubao. Travel time is usually 2 to 3 hours depending on traffic.</p>
+                <p>Buses from Manila (Buendia, Cubao) regularly route to key provincial hubs like Batangas City, Lipa, and Lemery.</p>
               </div>
             </div>
             <div className="route">
               <div className="route-icon" aria-hidden="true">CAR</div>
               <div className="route-info">
-                <h4>By Car via SLEX and STAR Tollway</h4>
-                <p>Take SLEX south, then STAR Tollway into the city, roughly 100 km from Metro Manila.</p>
+                <h4>By Car via STAR Tollway</h4>
+                <p>Take SLEX and connect to the STAR Tollway to easily access different municipalities and coastal towns across the province.</p>
               </div>
             </div>
             <div className="route">
               <div className="route-icon" aria-hidden="true">SEA</div>
               <div className="route-info">
-                <h4>By Ferry for Onward Travel</h4>
-                <p>From Batangas Port, ferries connect to Puerto Galera, Calapan, and other southern routes.</p>
+                <h4>By Sea via Provincial Ports</h4>
+                <p>Aside from the main Batangas Port, various local ports connect mainland Batangas to the neighboring islands of Mindoro and Marinduque.</p>
               </div>
             </div>
           </div>
@@ -170,9 +171,9 @@ export function HomePage() {
       <section id="food">
         <div className="section-head reveal">
           <p className="section-eyebrow">Food and Delicacies</p>
-          <h2 className="section-title">A City You Can Taste</h2>
+          <h2 className="section-title">A Province You Can Taste</h2>
           <p className="section-body">
-            Batangueño cooking runs bold, from thick soups to strong coffee and dishes built to be shared.
+            Batangueño culinary heritage is rich and comforting, from thick savory soups to robust locally-grown coffee.
           </p>
         </div>
         <div className="food-grid">
@@ -227,7 +228,7 @@ export function HomePage() {
       <section id="visit">
         <div className="section-head reveal">
           <p className="section-eyebrow">Practical Info and Travel</p>
-          <h2 className="section-title">Visiting the City</h2>
+          <h2 className="section-title">Visiting the Province</h2>
           <p className="section-body">
             Secure accommodation and transport options for your Batangas travel.
           </p>

@@ -41,7 +41,7 @@ export function Layout({ user, onLogout, onOpenAuth, children }) {
       <nav id="navbar" className={scrolled ? 'scrolled' : ''}>
         <Link to="/" className="nav-logo">
           <BrandMark />
-          Batangas City
+          Batangas Province
         </Link>
 
         <ul className="nav-links">
@@ -68,9 +68,9 @@ export function Layout({ user, onLogout, onOpenAuth, children }) {
           <div className="footer-brand">
             <Link to="/" className="nav-logo">
               <BrandMark />
-              Batangas City
+              Batangas Province
             </Link>
-            <p>Showcasing Batangas City, its origin, heritage, destinations, food, events, and bookable travel services.</p>
+            <p>Showcasing Batangas Province, its origin, heritage, destinations, food, events, and bookable travel services.</p>
           </div>
           <div className="footer-col">
             <h4>Explore</h4>
@@ -92,8 +92,8 @@ export function Layout({ user, onLogout, onOpenAuth, children }) {
           <div className="footer-col">
             <h4>Official Channels</h4>
             <ul>
-              <li><a href="https://www.batangascity.gov.ph/web/" target="_blank" rel="noreferrer">City Government Site</a></li>
-              <li><a href="https://www.batangascity.gov.ph/web/about-the-city/general-information/emergency-numbers" target="_blank" rel="noreferrer">Emergency Numbers</a></li>
+              <li><a href="https://www.batangas.gov.ph/" target="_blank" rel="noreferrer">Provincial Government Site</a></li>
+              <li><a href="https://www.batangas.gov.ph/" target="_blank" rel="noreferrer">Contact & Directory</a></li>
             </ul>
           </div>
         </div>

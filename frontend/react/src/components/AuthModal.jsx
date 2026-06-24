@@ -111,7 +111,7 @@ export function AuthModal({ open, mode = 'login', onClose, onAuth }) {
         <div className="modal-header">
           <h3 className="modal-title">{activeMode === 'register' ? 'Create Account' : 'Welcome Back'}</h3>
           <p className="modal-subtitle">
-            {activeMode === 'register' ? 'Already have an account?' : 'New to Batangas City?'}
+            {activeMode === 'register' ? 'Already have an account?' : 'New to Batangas?'}
             {' '}
             <button type="button" className="inline-link" onClick={() => switchMode(activeMode === 'register' ? 'login' : 'register')}>
               {activeMode === 'register' ? 'Log in here' : 'Create an account'}
