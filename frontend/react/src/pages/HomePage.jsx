@@ -31,21 +31,10 @@ export function HomePage() {
           </div>
         </div>
         <div className="hero-foot">
-          <span className="hero-coords">13.7565 N, 121.0583 E - Batangas City, Philippines</span>
+          <span className="hero-coords">13.9750° N, 121.0220° E - Taal Lake</span>
         </div>
       </section>
 
-      <section className="fact-strip" aria-label="Batangas quick facts">
-        {facts.map((fact, index) => (
-          <article key={fact.label} className={`fact reveal reveal-delay-${index}`}>
-            <div className="fact-label">{fact.label}</div>
-            <div className="fact-val">
-              {fact.value}
-              <small>{fact.detail}</small>
-            </div>
-          </article>
-        ))}
-      </section>
 
       <section id="origin">
         <div className="origin-art reveal">
