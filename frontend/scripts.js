@@ -19,8 +19,15 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => observer.observe(el));
-document.addEventListener('DOMContentLoaded', () => {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const currentUser = (await fetch('/backend/api/auth.php', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json())).user;
+    console.log(currentUser);
     const guestItems = document.querySelectorAll('.auth-guest');
     const userItems = document.querySelectorAll('.auth-user');
     const navUserLink = document.getElementById('navUser');
@@ -30,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         guestItems.forEach(el => el.style.display = 'none');
         userItems.forEach(el => el.style.display = 'list-item');
         if (navUserLink) {
-            navUserLink.textContent = currentUser.full_name;
             navUserLink.href = 'user.html'; 
         }
     } else {
@@ -41,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.removeItem('currentUser');
+            fetch('/backend/api/auth.php?action=logout', {
+                method: 'POST',
+            });
             window.location.reload();
         });
     }

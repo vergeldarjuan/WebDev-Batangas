@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phonePattern = /^09\d{9}$/;
@@ -211,44 +211,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = 'Connecting...';
                 submitBtn.disabled = true;
 
-                setTimeout(() => {
-                    const email = loginEmail.value.trim();
-                    let fullName = 'Sample User';
-                    let role = 'user';
-                    let phone = '09123456789';
 
-                    if (email === 'admin@example.com') {
-                        fullName = 'Admin User';
-                        role = 'admin';
-                    } else if (email === 'user@example.com') {
-                        fullName = 'Sample User';
-                        role = 'user';
-                    } else {
-                        const parts = email.split('@')[0];
-                        fullName = parts.charAt(0).toUpperCase() + parts.slice(1);
-                    }
-
-                    localStorage.setItem('currentUser', JSON.stringify({
-                        full_name: fullName,
-                        email: email,
-                        phone: phone,
-                        role: role,
-                        loggedInAt: new Date().toISOString()
-                    }));
-
-                    loginAlert.textContent = 'Login successful!';
-                    setTimeout(() => {
-                        closeAuthModal();
-                        
-                        const pendingBookingId = localStorage.getItem('pendingBookingId');
-                        if (pendingBookingId) {
-                            localStorage.removeItem('pendingBookingId');
-                            window.location.href = `listings.html?bookingId=${pendingBookingId}`;
-                        } else {
+                fetch('/backend/api/auth.php?action=login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: loginEmail.value.trim(),
+                        password: loginPassword.value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loginAlert.textContent = data.message;
+                        loginAlert.className = 'auth-alert success';
+                        setTimeout(() => {
                             window.location.reload();
-                        }
-                    }, 1000);
-                }, 1200);
+                        }, 500);
+                    } else {
+                        loginAlert.textContent = data.message;
+                        loginAlert.className = 'auth-alert error';
+                        submitBtn.textContent = 'Log In';
+                        submitBtn.disabled = false;
+                    }
+                })
+
             }
         });
 
