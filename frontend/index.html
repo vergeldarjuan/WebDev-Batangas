@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batangas City — Eto Batangueño Disiplinado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+
+<nav id="navbar">
+    <a href="#hero" class="nav-logo">
+        <svg class="mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+        <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+        <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="1.6" fill="currentColor"/>
+        </svg>
+        Batangas City
+    </a>
+    <ul class="nav-links">
+        <li><a href="#origin">Origin</a></li>
+        <li><a href="#about">Heritage</a></li>
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#food">Food</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#visit">Visit</a></li>
+    </ul>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <svg class="river-lines" viewBox="0 0 500 800" preserveAspectRatio="none">
+        <path d="M500,0 C380,120 420,260 320,360 C220,460 280,600 180,800" stroke="#c98a52" stroke-width="1" fill="none" opacity="0.35"/>
+        <path d="M500,40 C400,160 460,300 360,400 C260,500 320,640 220,800" stroke="#c98a52" stroke-width="1" fill="none" opacity="0.22"/>
+        <path d="M500,-40 C360,90 380,230 280,330 C180,430 240,580 140,800" stroke="#c98a52" stroke-width="1" fill="none" opacity="0.18"/>
+    </svg>
+    <div class="hero-content">
+        <p class="hero-eyebrow">5th District · Province of Batangas · Founded 1581</p>
+        <h1 class="hero-title">Let's explore the Industrial Port City of CALABARZON, <em>Batangas City</em>.</h1>
+        <p class="hero-sub">Batangas City sits where the Calumpang River meets the bay, provincial capital since 1754, port to the Visayas and Mindanao, and the place that gave the whole province its name.</p>
+        <div class="hero-actions">
+        <a href="#origin" class="hero-cta">Start Exploring</a>
+        <a href="#destinations" class="hero-cta-ghost">See the city</a>
+        </div>
+    </div>
+    <div class="hero-foot">
+        <span class="hero-coords">13.7565° N, 121.0583° E — Batangas City, Philippines</span>
+    </div>
+</section>
+
+<!-- ═══════════════ FACT STRIP ═══════════════ -->
+<div class="fact-strip">
+    <div class="fact reveal">
+        <div class="fact-label">Founded</div>
+        <div class="fact-val">1581<small>City charter signed June 21, 1969</small></div>
+    </div>
+    <div class="fact reveal reveal-delay-1">
+        <div class="fact-label">Provincial capital since</div>
+        <div class="fact-val">1754<small>Seat of Batangas province</small></div>
+    </div>
+    <div class="fact reveal reveal-delay-2">
+        <div class="fact-label">City Mayor</div>
+        <div class="fact-val">M. Mariño<small>Mario Vittorio A. Mariño</small></div>
+    </div>
+    <div class="fact reveal reveal-delay-3">
+        <div class="fact-label">Founding anniversary</div>
+        <div class="fact-val">Jul. 23<small>Sublian Festival, City Foundation Day</small></div>
+    </div>
+</div>
+
+<!-- ═══════════════ NAME ORIGIN ═══════════════ -->
+<section id="origin">
+    <div class="origin-art reveal">
+        <svg class="batang-rings" viewBox="0 0 380 380" fill="none">
+        <circle cx="190" cy="190" r="170" stroke="#8a5a36" stroke-width="1.5" opacity="0.25"/>
+        <circle cx="190" cy="190" r="138" stroke="#8a5a36" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="190" cy="190" r="106" stroke="#8a5a36" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="190" cy="190" r="74" stroke="#8a5a36" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="190" cy="190" r="42" stroke="#b3402f" stroke-width="2"/>
+        <circle cx="190" cy="190" r="10" fill="#b3402f"/>
+        <path d="M40,120 L340,120" stroke="#103c3c" stroke-width="0.6" opacity="0.3"/>
+        <path d="M30,250 L350,250" stroke="#103c3c" stroke-width="0.6" opacity="0.3"/>
+        <circle cx="40" cy="120" r="2" fill="#103c3c" opacity="0.5"/>
+        <circle cx="350" cy="250" r="2" fill="#103c3c" opacity="0.5"/>
+        </svg>
+        <p class="origin-caption">A cross-section of a "batang" — the floating logs that gave the river settlement, and eventually the whole province, its name.</p>
+    </div>
+    <div class="origin-text">
+        <p class="section-eyebrow">Where the Name Came From</p>
+        <h2 class="section-title">Batangan, then Batangas</h2>
+        <p class="section-body">
+        Spanish missionaries reached this stretch of coast in 1572. When the settlement was founded in 1581, the Calumpang River was thick with large floating logs that the natives called <em>batang</em>. The riverside barangay took the name <em>Batangan</em> after them — later softened to <em>Batangas</em> in 1601, and eventually lent to the entire province.
+        </p>
+        <div class="timeline">
+        <div class="tl-item">
+            <div class="tl-year">1581</div>
+            <div class="tl-text">Settlement founded; <strong>first Roman Catholic church</strong> built the same year.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-year">1754</div>
+            <div class="tl-text">Named <strong>provincial capital</strong> and administrative seat of Batangas.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-year">1948</div>
+            <div class="tl-text">The town church elevated to <strong>Basilica Minor</strong> of the Infant Jesus and Immaculate Conception.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-year">Jun 21, 1969</div>
+            <div class="tl-text"><strong>R.A. 5495</strong> creates Batangas City; formally organized a month later on July 23.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-year">2015</div>
+            <div class="tl-text"><strong>R.A. 10673</strong> reapportions the city as the province's 5th Congressional District.</div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ HERITAGE / ABOUT ═══════════════ -->
+<section id="about">
+    <div class="about-grid">
+        <div class="about-image-wrap reveal">
+        <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Taal_Basilica_1.jpg/800px-Taal_Basilica_1.jpg"
+            alt="Basilica architecture in Batangas province"
+        />
+        <div class="about-image-label">Baroque-era basilica architecture, Batangas province</div>
+        </div>
+        <div class="about-text">
+        <p class="section-eyebrow">Built on Faith and Trade</p>
+        <h2 class="section-title">A Capital Long Before It Was a City</h2>
+        <p class="section-body">
+            Long before its 1969 charter, Batangas was already the seat of the province — a status it held from 1754 onward. Its identity was shaped early by the church, the port, and the people who called themselves Batangueño: known across the country for their distinct Tagalog dialect and a reputation for being matapang at masipag, bold and hardworking.
+        </p>
+        <div class="heritage-list reveal reveal-delay-1">
+            <div class="heritage-row">
+            <div class="heritage-year">1902</div>
+            <div>
+                <div class="heritage-name">Batangas High School opens</div>
+                <div class="heritage-desc">Now the Batangas City Integrated High School.</div>
+            </div>
+            </div>
+            <div class="heritage-row">
+            <div class="heritage-year">1909</div>
+            <div>
+                <div class="heritage-name">Municipal Hall inaugurated</div>
+                <div class="heritage-desc">June 19, 1909 — still part of the city's civic core.</div>
+            </div>
+            </div>
+            <div class="heritage-row">
+            <div class="heritage-year">1910</div>
+            <div>
+                <div class="heritage-name">Trade school formally opens</div>
+                <div class="heritage-desc">Forerunner of Batangas State University.</div>
+            </div>
+            </div>
+            <div class="heritage-row">
+            <div class="heritage-year">1915</div>
+            <div>
+                <div class="heritage-name">Plaza Mabini inaugurated</div>
+                <div class="heritage-desc">Named for Apolinario Mabini, "Brains of the Revolution."</div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ ROLE / IDENTITY ═══════════════ -->
+<section id="role">
+    <div class="section-head">
+        <p class="section-eyebrow">What the City Does</p>
+        <h2 class="section-title">More Than a Stopover</h2>
+        <p class="section-body">Batangas City carries three jobs at once: provincial capital, regional economic hub, and the nautical gateway south. Each shapes a different part of daily life here.</p>
+    </div>
+    <div class="role-grid">
+        <div class="role-card reveal">
+        <div class="role-num">01 / Port City</div>
+        <div class="role-title">Gateway South</div>
+        <div class="role-desc">Home to the Batangas Port, anchoring the western nautical highway to the Visayas and Mindanao, with the Batangas–Calapan link as its busiest route.</div>
+        </div>
+        <div class="role-card reveal reveal-delay-1">
+        <div class="role-num">02 / Growth Center</div>
+        <div class="role-title">Regional Hub</div>
+        <div class="role-desc">Classified as a Regional Growth Center in CALABARZON and a Regional Agro-Industrial Center and Special Economic Zone, with STAR Tollway and SLEX-Calamba making travel from Manila faster.</div>
+        </div>
+        <div class="role-card reveal reveal-delay-2">
+        <div class="role-num">03 / Provincial Seat</div>
+        <div class="role-title">Capital Since 1754</div>
+        <div class="role-desc">The administrative center of Batangas province, recognized in 2010 by AIM, USAID, and GTZ as the Most Honest and Transparent City in its dealings.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ DESTINATIONS ═══════════════ -->
+<section id="destinations">
+    <div class="section-head">
+        <p class="section-eyebrow">In and Around the City</p>
+        <h2 class="section-title">What's Worth the Drive</h2>
+        <p class="section-body">The city sits a short trip from the province's best-known sights — and holds a few of its own, from a UNESCO-adjacent volcano view to a coastline built for diving.</p>
+    </div>
+
+    <div class="dest-grid reveal">
+        <div class="dest-card tall">
+        <img src="/frontend/images/destinations/taal.jpeg" alt="Taal Volcano" />
+        <div class="dest-overlay">
+            <div class="dest-tag">Natural Landmark</div>
+            <div class="dest-name">Taal Volcano & Lake</div>
+            <div class="dest-desc">One of the world's smallest active volcanoes, sitting inside a lake inside an island — Batangas province's most recognizable feature.</div>
+        </div>
+        </div>
+        <div class="dest-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Mabini_Batangas_coastline.jpg/640px-Mabini_Batangas_coastline.jpg" alt="Anilao Mabini coastline" />
+        <div class="dest-overlay">
+            <div class="dest-tag">Dive Coast</div>
+            <div class="dest-name">Anilao, Mabini</div>
+            <div class="dest-desc">Often called the birthplace of Philippine scuba diving, with coral reefs and macro life close to the city.</div>
+        </div>
+        </div>
+        <div class="dest-card">
+        <img src="/frontend/images/destinations/laiya.jpg" alt="Laiya Beach San Juan Batangas" />
+        <div class="dest-overlay">
+            <div class="dest-tag">Beach Getaway</div>
+            <div class="dest-name">Laiya Beach, San Juan</div>
+            <div class="dest-desc">White-sand beaches a few hours from the city — a common weekend trip for residents and visitors alike.</div>
+        </div>
+        </div>
+        <div class="dest-card">
+        <img src="/frontend/images/destinations/taal.jpg" alt="Taal Heritage Town" />
+        <div class="dest-overlay">
+            <div class="dest-tag">Heritage Town</div>
+            <div class="dest-name">Taal Heritage Town</div>
+            <div class="dest-desc">Cobblestone streets, ancestral houses, and the Taal Basilica — a short drive from the city proper.</div>
+        </div>
+        </div>
+        <div class="dest-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Batangas_Harbor.jpg/640px-Batangas_Harbor.jpg" alt="Batangas City Port" />
+        <div class="dest-overlay">
+            <div class="dest-tag">City Landmark</div>
+            <div class="dest-name">Batangas Port</div>
+            <div class="dest-desc">The working heart of the city's identity as a gateway — RORO ferries depart daily for Mindoro and beyond.</div>
+        </div>
+        </div>
+    </div>
+
+    <div class="how-to-get reveal">
+        <div class="how-title">How to Get to Batangas City</div>
+        <div class="how-routes">
+        <div class="route">
+            <div class="route-icon">🚌</div>
+            <div class="route-info">
+            <h4>By Bus (from Manila)</h4>
+            <p>Buses run from Buendia (Gil Puyat) and Cubao. Travel time runs 2–3 hours depending on traffic.</p>
+            </div>
+        </div>
+        <div class="route">
+            <div class="route-icon">🚗</div>
+            <div class="route-info">
+            <h4>By Car via SLEX / STAR Tollway</h4>
+            <p>Take SLEX south, then the STAR Tollway into the city — roughly 100 km from Metro Manila.</p>
+            </div>
+        </div>
+        <div class="route">
+            <div class="route-icon">⛴</div>
+            <div class="route-info">
+            <h4>By Ferry (onward travel)</h4>
+            <p>From Batangas Port, RORO ferries connect to Puerto Galera, Calapan, and points further south.</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ FOOD ═══════════════ -->
+<section id="food">
+    <div class="section-head">
+        <p class="section-eyebrow">Food & Delicacies</p>
+        <h2 class="section-title">A City You Can Taste</h2>
+        <p class="section-body">Batangueño cooking runs bold — thick soups, strong coffee, and dishes built to be shared at any hour.</p>
+    </div>
+
+    <div class="food-grid">
+        <div class="food-card reveal">
+        <img class="food-img" src="/frontend/images/food/batangaslomi.jpg" alt="Batangas Lomi" />
+        <div class="food-body">
+            <div class="food-name">Batangas Lomi</div>
+            <p class="food-desc">Thick egg noodles in a hearty, starchy broth with pork, kikiam, and egg — a staple eaten any time of day.</p>
+            <span class="food-badge">Must-Try</span>
+        </div>
+        </div>
+        <div class="food-card reveal reveal-delay-1">
+        <img class="food-img" src="/frontend/images/food/bulalo.jpg" alt="Bulalo" />
+        <div class="food-body">
+            <div class="food-name">Bulalo</div>
+            <p class="food-desc">A slow-cooked beef marrow bone soup, rich and savory — so tied to the province that neighboring towns serve it in its honor.</p>
+            <span class="food-badge">Province Classic</span>
+        </div>
+        </div>
+        <div class="food-card reveal reveal-delay-2">
+        <img class="food-img" src="/frontend/images/food/kapengbarako.jpg" alt="Kapeng Barako" />
+        <div class="food-body">
+            <div class="food-name">Kapeng Barako</div>
+            <p class="food-desc">A bold, full-bodied coffee grown from Coffea liberica, unique to Batangas and Cavite — the scent of mornings here.</p>
+            <span class="food-badge">Local Pride</span>
+        </div>
+        </div>
+        <div class="food-card reveal reveal-delay-3">
+        <img class="food-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Goto_and_Mami.jpg/640px-Goto_and_Mami.jpg" alt="Suman at Tablea" />
+        <div class="food-body">
+            <div class="food-name">Suman & Tablea</div>
+            <p class="food-desc">Sticky rice in banana leaf, paired with rich tablea hot chocolate — a familiar morning ritual in Batangueño homes.</p>
+            <span class="food-badge">Heritage Delicacy</span>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ EVENTS & GALLERY ═══════════════ -->
+<section id="events">
+    <div class="section-head">
+        <p class="section-eyebrow">Events & Gallery</p>
+        <h2 class="section-title">The Batangueño Calendar</h2>
+        <p class="section-body">Faith and festival run close together here — the Sublian honors the city's founding, while the province's other fiestas draw crowds well beyond Batangas.</p>
+    </div>
+
+    <div class="events-layout">
+        <div class="event-list">
+        <div class="event-item reveal">
+            <div class="event-date">
+            <div class="event-month">Jul</div>
+            <div class="event-day">23</div>
+            </div>
+            <div class="event-info">
+            <h3>Sublian Festival — City Foundation Day</h3>
+            <p>Marks the formal organization of Batangas City Government on July 23, 1969, with street dances and processions honoring the city's history.</p>
+            <div class="event-location">📍 Batangas City</div>
+            </div>
+        </div>
+        <div class="event-item reveal reveal-delay-1">
+            <div class="event-date">
+            <div class="event-month">Jan</div>
+            <div class="event-day">14</div>
+            </div>
+            <div class="event-info">
+            <h3>Feast of the Black Nazarene</h3>
+            <p>Devotees join the translación of the Black Nazarene through city streets in one of the area's most visible shows of faith.</p>
+            <div class="event-location">📍 Batangas City Cathedral</div>
+            </div>
+        </div>
+        <div class="event-item reveal reveal-delay-2">
+            <div class="event-date">
+            <div class="event-month">May</div>
+            <div class="event-day">01</div>
+            </div>
+            <div class="event-info">
+            <h3>Sandugo Festival — Balayan</h3>
+            <p>A provincial fiesta reenacting the blood compact between Spanish and Tagalog locals, with costumed parades and street dances.</p>
+            <div class="event-location">📍 Balayan, Batangas</div>
+            </div>
+        </div>
+        <div class="event-item reveal reveal-delay-3">
+            <div class="event-date">
+            <div class="event-month">Nov</div>
+            <div class="event-day">30</div>
+            </div>
+            <div class="event-info">
+            <h3>Balisong Festival — Taal</h3>
+            <p>Celebrates the province's famous balisong knife-making, with flipping competitions and local artisan showcases.</p>
+            <div class="event-location">📍 Taal, Batangas</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-grid reveal">
+        <div class="gallery-item wide">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Batangas_Harbor.jpg/800px-Batangas_Harbor.jpg" alt="Batangas Port" />
+            <div class="gallery-item-label">Batangas Port</div>
+        </div>
+        <div class="gallery-item">
+            <img src="/frontend/images/destinations/taal.jpeg" alt="Taal Volcano" />
+            <div class="gallery-item-label">Taal Volcano</div>
+        </div>
+        <div class="gallery-item">
+                <img src="/frontend/images/destinations/laiya.jpg" alt="Laiya Beach" />
+                <div class="gallery-item-label">Laiya Beach</div>
+            </div>
+        <div class="gallery-item wide">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Mabini_Batangas_coastline.jpg/640px-Mabini_Batangas_coastline.jpg" alt="Anilao Coastline" />
+            <div class="gallery-item-label">Anilao Coastline</div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ VISIT / CONTACT ═══════════════ -->
+<section id="visit">
+    <div class="section-head">
+        <p class="section-eyebrow">Practical Info</p>
+        <h2 class="section-title">Visiting the City</h2>
+        <p class="section-body">For anything official — permits, records, emergencies — these are the city's own channels, not third-party listings.</p>
+    </div>
+    <div class="visit-grid">
+        <div class="visit-card reveal">
+        <h4>City Hall</h4>
+        <p>Batangas City Hall Complex<br />P. Burgos Street, Barangay 17<br />Batangas City, Batangas 4200</p>
+        </div>
+        <div class="visit-card reveal reveal-delay-1">
+        <h4>General Line</h4>
+        <p>+63 (043) 723-1511<br />Mayor's Action Center: 786-1920</p>
+        </div>
+        <div class="visit-card reveal reveal-delay-2">
+        <h4>Official Site</h4>
+        <p>For business permits, full disclosure reports, and city advisories, visit<br /><a href="https://www.batangascity.gov.ph/web/" target="_blank" rel="noopener">batangascity.gov.ph</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+        <a href="#hero" class="nav-logo">Batangas City</a>
+        <p>Showcasing of Batangas City: its founding, heritage, and the places worth visiting in and around it.</p>
+        </div>
+        <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+            <li><a href="#origin">Name Origin</a></li>
+            <li><a href="#about">Heritage</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#events">Events</a></li>
+        </ul>
+        </div>
+        <div class="footer-col">
+        <h4>Practical</h4>
+        <ul>
+            <li><a href="#destinations">How to Get There</a></li>
+            <li><a href="#food">Food & Delicacies</a></li>
+            <li><a href="#visit">Contact</a></li>
+        </ul>
+        </div>
+        <div class="footer-col">
+        <h4>Official Channels</h4>
+        <ul>
+            <li><a href="https://www.batangascity.gov.ph/web/" target="_blank" rel="noopener">City Government Site</a></li>
+            <li><a href="https://www.batangascity.gov.ph/web/about-the-city/general-information/emergency-numbers" target="_blank" rel="noopener">Emergency Numbers</a></li>
+        </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 WEB DEVELOPMENT GROUP 14. ALL RIGHT RESERVED.</span>
+        <span>Eto Batangueño Disiplinado</span>
+    </div>
+</footer>
+</body>
+</html>
