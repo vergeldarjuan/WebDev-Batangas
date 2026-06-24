@@ -24,15 +24,10 @@ export function HomePage() {
           <path d="M500,-40 C360,90 380,230 280,330 C180,430 240,580 140,800" stroke="#c98a52" strokeWidth="1" fill="none" opacity="0.18" />
         </svg>
         <div className="hero-content">
-          <p className="hero-eyebrow">5th District - Province of Batangas - Founded 1581</p>
-          <h1 className="hero-title">Explore the Industrial Port City of CALABARZON, <em>Batangas City</em>.</h1>
-          <p className="hero-sub">
-            Batangas City sits where the Calumpang River meets the bay, provincial capital since 1754,
-            port to the south, and the place that gave the province its name.
-          </p>
+          <p className="hero-eyebrow">Land of Rolling Hills and Wide Shore Lands</p>
+          <h1 className="hero-title">Batangas</h1>
           <div className="hero-actions">
-            <Link to="/#origin" className="hero-cta">Start Exploring</Link>
-            <Link to="/listings" className="hero-cta-ghost">See rentals</Link>
+            <Link to="/#origin" className="hero-cta">Explore</Link>
           </div>
         </div>
         <div className="hero-foot">
