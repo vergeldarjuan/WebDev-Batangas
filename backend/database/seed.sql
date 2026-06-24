@@ -62,6 +62,19 @@ INSERT INTO listings (
         1
     );
 
+INSERT INTO listing_images (listing_id, image_path, is_primary) VALUES
+    (1, '/uploads/listings/Taal-Lake-View-1.jpg', 1),
+    (1, '/uploads/listings/Taal-Lake-View-2.jpg', 0),
+    (1, '/uploads/listings/Taal-Lake-View-3.jpg', 0),
+    (2, '/uploads/listings/Laiya-Beach-Apartment-1.jpg', 1),
+    (2, '/uploads/listings/Laiya-Beach-Apartment-2.jpg', 0),
+    (2, '/uploads/listings/Laiya-Beach-Apartment-3.jpg', 0),
+    (2, '/uploads/listings/Laiya-Beach-Apartment-4.jpg', 0),
+    (3, '/uploads/listings/Compact-Sedan-rental-1.jpg', 1),
+    (3, '/uploads/listings/Compact-Sedan-rental-2.jpg', 0),
+    (4, '/uploads/listings/Family-SUV-Renta-1.jpg', 1),
+    (4, '/uploads/listings/Family-SUV-Renta-2.jpg', 0);
+
 INSERT INTO bookings (
     user_id,
     listing_id,

@@ -121,10 +121,43 @@ try {
 
         $statement = $pdo->prepare($sql);
         $statement->execute($params);
+        $listings = $statement->fetchAll();
+
+        $listingIds = array_column($listings, 'id');
+
+        if ($listingIds) {
+            $placeholders = implode(',', array_fill(0, count($listingIds), '?'));
+            $imageStatement = $pdo->prepare(
+                "SELECT id, listing_id, image_path, is_primary FROM listing_images WHERE listing_id IN ({$placeholders}) ORDER BY listing_id, is_primary DESC, id"
+            );
+            $imageStatement->execute($listingIds);
+
+            $imagesByListingId = [];
+
+            foreach ($imageStatement->fetchAll() as $image) {
+                $listingId = (int) $image['listing_id'];
+                $imagesByListingId[$listingId][] = [
+                    'id' => (int) $image['id'],
+                    'image_path' => $image['image_path'],
+                    'is_primary' => (int) $image['is_primary'],
+                ];
+            }
+
+            foreach ($listings as &$listing) {
+                $listingId = (int) $listing['id'];
+                $images = $imagesByListingId[$listingId] ?? [];
+
+                $listing['images'] = $images;
+                $listing['primary_image_path'] = $images[0]['image_path'] ?? null;
+                $listing['image_count'] = count($images);
+            }
+
+            unset($listing);
+        }
 
         jsonResponse([
             'success' => true,
-            'listings' => $statement->fetchAll(),
+            'listings' => $listings,
         ]);
     }
 

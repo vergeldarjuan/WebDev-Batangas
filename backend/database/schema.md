@@ -97,7 +97,7 @@ Fields:
 Notes:
 
 - `listing_id` connects the image to the `listings` table.
-- `image_path` stores the image location, like `uploads/listings/sample.jpg`.
+- `image_path` stores the image location, like `/images/listings/sample.jpg` for seeded images or `uploads/listings/sample.jpg` for future admin uploads.
 - `is_primary` can be `1` for the main image and `0` for extra images.
 
 ### bookings
