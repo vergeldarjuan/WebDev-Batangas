@@ -1,3 +1,4 @@
+// App.jsx - Root React component and route definitions
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { api } from './api/client.js';

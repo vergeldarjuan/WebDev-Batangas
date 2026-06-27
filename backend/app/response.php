@@ -1,4 +1,5 @@
 <?php
+// response.php - helpers for standardized JSON responses and errors
 
 function jsonResponse(array $data, int $status = 200) {
     http_response_code($status);

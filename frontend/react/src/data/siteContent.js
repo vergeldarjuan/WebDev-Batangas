@@ -1,3 +1,4 @@
+// siteContent.js - static content and helpers for display (facts, listings helpers)
 export const facts = [
   {
     label: 'Founded',

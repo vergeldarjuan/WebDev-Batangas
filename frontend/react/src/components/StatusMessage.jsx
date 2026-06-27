@@ -1,3 +1,4 @@
+// StatusMessage.jsx - small reusable notification components
 export function StatusMessage({ children, success = false }) {
   if (!children) {
     return null;

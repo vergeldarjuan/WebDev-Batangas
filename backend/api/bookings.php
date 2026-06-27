@@ -1,4 +1,5 @@
 <?php
+// bookings.php - Booking management API (create, view, update, cancel)
 
 require_once __DIR__ . '/../app/init.php';
 

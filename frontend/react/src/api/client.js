@@ -1,3 +1,4 @@
+// client.js - thin API client wrapper used across the frontend
 const API_BASE = '/api';
 
 function buildPath(path, params = {}) {

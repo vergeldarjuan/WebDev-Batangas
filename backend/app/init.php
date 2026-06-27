@@ -1,4 +1,5 @@
 <?php
+// init.php - bootstrap for backend API requests (session, constants, includes)
 
 session_start();
 

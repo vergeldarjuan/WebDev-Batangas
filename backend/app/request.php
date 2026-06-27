@@ -1,4 +1,5 @@
 <?php
+// request.php - helpers for parsing request payloads (JSON, form, urlencoded)
 
 function getRequestData(): array {
     $contentType = $_SERVER['CONTENT_TYPE'] ?? '';

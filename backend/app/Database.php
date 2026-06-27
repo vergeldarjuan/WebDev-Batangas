@@ -1,4 +1,5 @@
 <?php
+// Database.php - simple PDO connector using env vars
 
 class Database {
     public static function connect(): PDO {

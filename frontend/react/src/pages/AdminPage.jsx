@@ -1,3 +1,4 @@
+// AdminPage.jsx - admin dashboard for managing bookings, listings, and users
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 import { StatusMessage, ToastMessage } from '../components/StatusMessage.jsx';
@@ -280,7 +281,7 @@ export function AdminPage({ user, setUser }) {
   };
 
   const disableListing = async (id) => {
-    if (!window.confirm('Disable this listing? Existing bookings will remain.')) {
+    if (!window.confirm('Delete this listing?')) {
       return;
     }
 
@@ -288,7 +289,7 @@ export function AdminPage({ user, setUser }) {
 
     try {
       await api.disableListing(id);
-      notifySuccess('Listing disabled.');
+      notifySuccess('Listing deleted.');
       await loadDashboardData();
     } catch (error) {
       notifyError(error.message);
@@ -599,7 +600,7 @@ export function AdminPage({ user, setUser }) {
                       <div className="admin-row-actions">
                         <button type="button" className="admin-secondary-btn" onClick={() => openEditListing(listing)}>Edit</button>
                         {Number(listing.is_available) === 1 && (
-                          <button type="button" className="admin-danger-btn" onClick={() => disableListing(listing.id)}>Disable</button>
+                          <button type="button" className="admin-danger-btn" onClick={() => disableListing(listing.id)}>Delete</button>
                         )}
                       </div>
                     </td>

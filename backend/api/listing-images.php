@@ -1,4 +1,5 @@
 <?php
+// listing-images.php - Handles image uploads for listings (admin only)
 
 require_once __DIR__ . '/../app/init.php';
 

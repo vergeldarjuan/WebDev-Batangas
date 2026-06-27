@@ -1,3 +1,4 @@
+// BookingModal.jsx - modal UI for creating and editing bookings
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 

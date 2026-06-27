@@ -1,3 +1,4 @@
+// AuthModal.jsx - modal UI for login/register flows
 import { useEffect, useState } from 'react';
 import { api } from '../api/client.js';
 
@@ -172,6 +173,17 @@ export function AuthModal({ open, mode = 'login', onClose, onAuth }) {
               autoComplete={activeMode === 'register' ? 'new-password' : 'current-password'}
             />
           </div>
+
+          {activeMode === 'register' && (
+            <div className="form-group">
+              <label htmlFor="authPassword" className="form-label">Confirm Password</label>
+              <input
+                id="authPassword"
+                className="form-control"
+                type="password"
+              />
+            </div>
+          )}
 
           <button type="submit" className="btn-auth" disabled={busy}>
             {busy ? 'Please wait' : activeMode === 'register' ? 'Register' : 'Log In'}

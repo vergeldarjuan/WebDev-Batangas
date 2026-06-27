@@ -1,4 +1,5 @@
 <?php
+// auth.php - Authentication endpoints (register, login, logout, profile)
 
 require_once __DIR__ . '/../app/init.php';
 

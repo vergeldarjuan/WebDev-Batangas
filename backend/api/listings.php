@@ -1,4 +1,6 @@
 <?php
+// listings.php - API endpoint for listing CRUD and retrieval
+// - Supports GET (list or single), POST (create), PUT (update), DELETE (remove)
 
 require_once __DIR__ . '/../app/init.php';
 
@@ -221,12 +223,12 @@ try {
         $listingId = getListingId($data);
         ensureListingExists($pdo, $listingId);
 
-        $statement = $pdo->prepare('UPDATE listings SET is_available = 0 WHERE id = ?');
+        $statement = $pdo->prepare('DELETE FROM listings WHERE id = ?');
         $statement->execute([$listingId]);
 
         jsonResponse([
             'success' => true,
-            'message' => 'Listing disabled.',
+            'message' => 'Listing deleted.',
         ]);
     }
 

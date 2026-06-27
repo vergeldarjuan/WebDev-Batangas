@@ -1,3 +1,4 @@
+// Layout.jsx - site header, navigation, and footer wrapper
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
@@ -52,7 +53,8 @@ export function Layout({ user, onLogout, onOpenAuth, children }) {
           <li><Link to="/#events">Events</Link></li>
           <li><NavLink to="/listings">Listings</NavLink></li>
           <li><NavLink to="/user">{user ? 'Profile' : 'User'}</NavLink></li>
-          <li><NavLink to="/admin">Admin</NavLink></li>
+          {user?.role == 'admin' ? (<li><NavLink to="/admin">Admin</NavLink></li>) : null}
+  
           {user ? (
             <li><button type="button" className="nav-button" onClick={onLogout}>Logout</button></li>
           ) : (

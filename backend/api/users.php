@@ -1,4 +1,5 @@
 <?php
+// users.php - Admin user management endpoints (list, view, update)
 
 require_once __DIR__ . '/../app/init.php';
 

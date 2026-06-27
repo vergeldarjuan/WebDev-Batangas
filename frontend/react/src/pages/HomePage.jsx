@@ -1,3 +1,4 @@
+// HomePage.jsx - landing page content and layout
 import { Link } from 'react-router-dom';
 import {
   destinations,

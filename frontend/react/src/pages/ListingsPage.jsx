@@ -1,3 +1,4 @@
+// ListingsPage.jsx - public listing browse and booking entry points
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../api/client.js';

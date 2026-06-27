@@ -1,3 +1,4 @@
+// useRevealAnimation.js - adds reveal animation class when elements enter viewport
 import { useEffect } from 'react';
 
 export function useRevealAnimation(refreshKey = '') {
